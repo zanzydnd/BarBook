@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         RegisterDao regDao = new RegisterDao();
         User user = new User();
         user.setLogin(request.getParameter("login"));

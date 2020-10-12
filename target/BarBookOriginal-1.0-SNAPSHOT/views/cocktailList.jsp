@@ -12,6 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script type="text/javascript" src="searching.js"></script>
     <title>Cocktail List</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Lora);
@@ -63,25 +64,24 @@
             background: #ADC0CE
         }
 
-        .men{
+        .men {
             width: 100%;
             display: flex;
             flex-direction: column;
         }
     </style>
 </head>
-<body>
+<body onload="init()">
 <div class="men">
     <nav class="two">
         <ul>
             <li><a href="/BarBookOriginal_war/">Home</a></li>
-            <li><a href="/BarBookOriginal_war/cocktaillist">Cocktails</a> </li>
+            <li><a href="/BarBookOriginal_war/cocktaillist">Cocktails</a></li>
             <li><a href="/BarBookOriginal_war/ingridients">Ingridients</a></li>
             <%
-                if(session.getAttribute("user") != null){
-                    out.println("<li><a href=\"/BarBookOriginal_war/profile\">"+ ((User) session.getAttribute("user")).getLogin()+"</a></li>");
-                }
-                else{
+                if (session.getAttribute("user") != null) {
+                    out.println("<li><a href=\"/BarBookOriginal_war/profile\">" + ((User) session.getAttribute("user")).getLogin() + "</a></li>");
+                } else {
                     out.println("<li><a href=\"/BarBookOriginal_war/registration\">Registration</a></li>");
                     out.println("<li><a href=\"/BarBookOriginal_war/auth\">Login</a></li>");
                 }
@@ -90,11 +90,11 @@
     </nav>
 </div>
 <%
-    List<Cocktail> p = (List)request.getAttribute("cockts");
+    List<Cocktail> p = (List) request.getAttribute("cockts");
     out.print("<h1> Hello There! </h1>");
-    for(Cocktail cock : p){
-        out.println("<h1><a href=\"/BarBookOriginal_war/cocktail?id="+cock.getId()+"\">"+cock.getName()+"</a></h1>");
-        out.println("<h2>"+cock.getInf()+"</h2>");
+    for (Cocktail cock : p) {
+        out.println("<h1><a href=\"/BarBookOriginal_war/cocktail?id=" + cock.getId() + "\">" + cock.getName() + "</a></h1>");
+        out.println("<h2>" + cock.getInf() + "</h2>");
     }
 %>
 

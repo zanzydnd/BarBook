@@ -67,6 +67,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AutoCompleteServlet</servlet-name>
+        <servlet-class>Servlets.AutoCompleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AutoCompleteServlet</servlet-name>
+        <url-pattern>/autocomplete</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>CocktailServlet</servlet-name>
         <servlet-class>Servlets.CocktailServlet</servlet-class>
     </servlet>
@@ -74,5 +83,15 @@
     <servlet-mapping>
         <servlet-name>CocktailServlet</servlet-name>
         <url-pattern>/cocktail</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CommnentServlet</servlet-name>
+        <servlet-class>Servlets.CommentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CommnentServlet</servlet-name>
+        <url-pattern>/CommentServlet</url-pattern>
     </servlet-mapping>
 </web-app>

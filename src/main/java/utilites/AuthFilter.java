@@ -1,6 +1,7 @@
 package utilites;
 
 import DAO.LoginDao;
+import DAO.UserDao;
 import Entities.User;
 
 import javax.servlet.*;
@@ -23,20 +24,21 @@ public class AuthFilter implements Filter {
         final String login = req.getParameter("login");
         final String password = req.getParameter("pass");
 
+        UserDao dao = new UserDao();
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
         LoginDao ld = new LoginDao();
-        String userValidate = ld.authenticateUser(user);
+        user = ld.authenticateUser(user);
         final HttpSession session = req.getSession();
-        if(userValidate.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+        if(user != null) //If function returns success string then user will be rooted to Home page
         {
             session.setAttribute("user",user);
             servletRequest.getRequestDispatcher("/views/main.jsp").forward(servletRequest, servletResponse);
         }
         else
         {
-            servletRequest.setAttribute("errMessage", userValidate); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
+            servletRequest.setAttribute("errMessage", "smth went wrong"); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
             servletRequest.getRequestDispatcher("/views/main.jsp").forward(servletRequest, servletResponse);//forwarding the request
         }
     }

@@ -4,10 +4,7 @@ import Entities.Cocktail;
 import Entities.Ingridient;
 import utilites.DBConnector;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class CocktailDao {
         try {
             con = DBConnector.createConnection();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("select * from cocktail");
+            resultSet = statement.executeQuery("select * from cocktail order by rating DESC");
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 Integer id = resultSet.getInt("id");
@@ -85,6 +82,8 @@ public class CocktailDao {
             ResultSet resultSet = statement.executeQuery("select * from cocktail where id=" + id);
             while (resultSet.next()) {
                 res.setId(id);
+                res.setRecipie(resultSet.getString("recipie_info"));
+                res.setRating(resultSet.getInt("rating"));
                 res.setName(resultSet.getString("name"));
                 res.setImg(resultSet.getString("img"));
                 res.setInf(resultSet.getString("information"));
@@ -93,5 +92,40 @@ public class CocktailDao {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public void newLike(Integer cockt_id, Integer user_id) throws SQLException {
+        boolean flag = true;
+        Connection con1 = DBConnector.createConnection();
+        Statement statement = con1.createStatement();
+        ResultSet resultSet = statement.executeQuery("select id_user , id_cocktail " +
+                "from cocktails_likes where id_cocktail =" + cockt_id);
+        while (resultSet.next()) {
+            if (resultSet.getInt("id_user") == user_id) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (flag) {
+            try {
+                Connection con = DBConnector.createConnection();
+                PreparedStatement statement2 = con.prepareStatement("insert into cocktails_likes(id_user,id_cocktail) values(?,?)");
+                statement2.setInt(1, user_id);
+                statement2.setInt(2, cockt_id);
+                statement2.executeLargeUpdate();
+                Cocktail cocktail = this.getCocktailById(cockt_id);
+                int rate = cocktail.getRating() + 1;
+                Connection con2 = DBConnector.createConnection();
+                String query = "update cocktail set rating=" + rate + " where id =" + cockt_id;
+                Statement statement1 = con2.createStatement();
+                statement1.executeUpdate(query);
+                System.out.println("!!!!");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }else {
+            throw new SQLException();
+        }
     }
 }

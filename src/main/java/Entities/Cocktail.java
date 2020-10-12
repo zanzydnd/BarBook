@@ -6,8 +6,17 @@ public class Cocktail {
     private String name;
     private String inf;
     private int rating;
-    
-    
+    private String recipie;
+
+
+    public String getRecipie() {
+        return recipie;
+    }
+
+    public void setRecipie(String rec) {
+        this.recipie = rec;
+    }
+
     public int getRating() {
         return rating;
     }
@@ -36,11 +45,11 @@ public class Cocktail {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    
-    public void setInf(String inf){
+
+    public void setInf(String inf) {
         this.inf = inf;
     }
 

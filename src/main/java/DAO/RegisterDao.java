@@ -13,7 +13,7 @@ public class RegisterDao {
         String name = user.getName();
         String email = user.getEmail();
         String login = user.getLogin();
-        String password = user.getPassword();
+        String password = Hashing.md5Custom(user.getPassword());
         String img = user.getImg();
         String information = user.getInformation();
         Integer favCocktail = user.getFavCockt();
