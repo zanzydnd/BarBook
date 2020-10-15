@@ -19,6 +19,8 @@
     <label>Password:
         <input type="password" name="pass"><br />
     </label>
+    <input type = "checkbox" id = "cookie" name="cookie" value = "yes">
+    <label for="cookie">Запомнить меня</label>
     <input class="button" type="submit" value="Войти">
 </form>
 </body>

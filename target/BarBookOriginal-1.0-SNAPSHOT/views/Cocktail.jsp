@@ -5,13 +5,7 @@
 <%@ page import="Entities.User" %>
 <%@ page import="DAO.CommentsDao" %>
 <%@ page import="Entities.Comment" %>
-<%@ page import="DAO.UserDao" %><%--
-  Created by IntelliJ IDEA.
-  User: Даня
-  Date: 29.09.2020
-  Time: 16:27
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="DAO.UserDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +13,9 @@
     <%
         CocktailDao dao = new CocktailDao();
         Cocktail cocktail = dao.getCocktailById(Integer.parseInt(request.getParameter("id")));
+        request.setAttribute("cocktail",cocktail);
         System.out.println(Integer.parseInt(request.getParameter("id")));
+        User user = (User)session.getAttribute("user");
     %>
     <title>Cocktail</title>
 </head>
@@ -33,6 +29,7 @@
             <%
                 if(session.getAttribute("user") != null){
                     out.println("<li><a href=\"/BarBookOriginal_war/profile\">"+ ((User) session.getAttribute("user")).getLogin()+"</a></li>");
+                    out.println("<li><a href=\"/BarBookOriginal_war/logout\">Logout</a></li>");
                 }
                 else{
                     out.println("<li><a href=\"/BarBookOriginal_war/registration\">Registration</a></li>");
@@ -44,9 +41,18 @@
 </div>
     <%out.println("<h1>"+cocktail.getName()+"</h1>");%>
         <%if(session.getAttribute("user")!= null){%>
-        <form method="post" action=<%out.print("/BarBookOriginal_war/cocktail?id=" + cocktail.getId());%>>
+<form method="post" action=<%out.print("/BarBookOriginal_war/cocktail?id=" + cocktail.getId());%>>
             <button type = "submit"  name="likedCocktId" value= <%out.print("\""  +cocktail.getId() + "\"");%> > Мне нравится <%out.print(cocktail.getRating());%></button>
         </form>
+<%--
+<form id = "like">
+    <input type="hidden" name="user_id" value="${user.getId()}">
+    <input type="hidden" name="likedCocktId" value ="${cocktail.getId()}">
+    <button type = "button" name="submit" value="Submit">Мне нравится <div id="rate">${cocktail.getRating()}</div></button>
+</form>
+<div id ="err"></div>
+<script src="like.js"></script>
+   --%>
             <%
                 if(request.getAttribute("errMsg") != null){
                     out.print("<p>Вы уже оставляли лайк</p>");
@@ -80,7 +86,6 @@
 
     <%
         CommentsDao commentsDao = new CommentsDao();
-        UserDao userDao = new UserDao();
         List<Comment> commList = commentsDao.getComments(cocktail);
         i = 0;
         while (i < commList.size()){

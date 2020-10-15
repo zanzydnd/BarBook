@@ -30,7 +30,6 @@ public class CommentServlet extends HttpServlet {
         comment.setUser(user);
         comment.setCocktail(cocktail);
         dao.putComment(comment);
-
         resp.sendRedirect(req.getContextPath() + "/cocktail?id=" + cocktail.getId());
     }
 

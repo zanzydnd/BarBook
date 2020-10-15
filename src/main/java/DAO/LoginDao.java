@@ -12,7 +12,7 @@ public class LoginDao {
     public User authenticateUser(User user)
     {
         String userName = user.getLogin();
-        String password = Hashing.md5Custom(user.getPassword());
+        String password = user.getPassword();
 
         Connection con = null;
         Statement statement = null;

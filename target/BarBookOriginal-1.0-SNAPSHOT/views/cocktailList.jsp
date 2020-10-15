@@ -12,7 +12,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <script type="text/javascript" src="searching.js"></script>
     <title>Cocktail List</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Lora);
@@ -70,8 +69,31 @@
             flex-direction: column;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            //console.log(2);
+            $('#button').click(function (event) {
+
+                var search = $('#search').val();
+
+                //console.log(search);
+                $.ajax({
+                    type: "POST", url: "Servlets.SearchServlet",
+                    data: {search: search},
+                    success: function (result) {
+                        for (var a in result) {
+                            console.log(result);
+                            var obj = jQuery.parseJSON(result);
+                            $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + a + "\">" + obj[a] + "</a>").appendTo($("#result"));
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
-<body onload="init()">
+<body>
 <div class="men">
     <nav class="two">
         <ul>
@@ -81,6 +103,7 @@
             <%
                 if (session.getAttribute("user") != null) {
                     out.println("<li><a href=\"/BarBookOriginal_war/profile\">" + ((User) session.getAttribute("user")).getLogin() + "</a></li>");
+                    out.println("<li><a href=\"/BarBookOriginal_war/logout\">Logout</a></li>");
                 } else {
                     out.println("<li><a href=\"/BarBookOriginal_war/registration\">Registration</a></li>");
                     out.println("<li><a href=\"/BarBookOriginal_war/auth\">Login</a></li>");
@@ -89,6 +112,15 @@
         </ul>
     </nav>
 </div>
+<div>
+    <input name="search" type="text" id="search">
+    <button type="button" id="button" name="button">Button</button>
+</div>
+
+<div id="result">
+
+</div>
+
 <%
     List<Cocktail> p = (List) request.getAttribute("cockts");
     out.print("<h1> Hello There! </h1>");

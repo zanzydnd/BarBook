@@ -1,10 +1,12 @@
 package utilites;
 
+import DAO.Hashing;
 import DAO.LoginDao;
 import DAO.UserDao;
 import Entities.User;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,12 +29,23 @@ public class AuthFilter implements Filter {
         UserDao dao = new UserDao();
         User user = new User();
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(Hashing.md5Custom(password));
         LoginDao ld = new LoginDao();
         user = ld.authenticateUser(user);
         final HttpSession session = req.getSession();
         if(user != null) //If function returns success string then user will be rooted to Home page
         {
+            if(req.getParameter("cookie")!=null){
+                Cookie cook1 = new Cookie("login",user.getLogin());
+                Cookie cook2 = new Cookie("pass",user.getPassword());
+                Cookie cook3 = new Cookie("id", user.getId().toString());
+                cook1.setMaxAge(60*60*24*30);
+                cook2.setMaxAge(60*60*24*30);
+                cook3.setMaxAge(60*60*24*30);
+                res.addCookie(cook1);
+                res.addCookie(cook2);
+                res.addCookie(cook3);
+            }
             session.setAttribute("user",user);
             servletRequest.getRequestDispatcher("/views/main.jsp").forward(servletRequest, servletResponse);
         }

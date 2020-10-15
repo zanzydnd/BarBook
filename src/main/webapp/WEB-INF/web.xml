@@ -50,6 +50,16 @@
         <servlet-name>CocktailListServlet</servlet-name>
         <servlet-class>Servlets.CocktailListServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>Servlets.SearchServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/Servlets.SearchServlet</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>CocktailListServlet</servlet-name>
@@ -93,5 +103,15 @@
     <servlet-mapping>
         <servlet-name>CommnentServlet</servlet-name>
         <url-pattern>/CommentServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>Servlets.LogoutServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>

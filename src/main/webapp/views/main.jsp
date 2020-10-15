@@ -76,10 +76,12 @@
                 <%
                     if(session.getAttribute("user") != null){
                         out.println("<li><a href=\"/BarBookOriginal_war/profile\">"+ ((User) session.getAttribute("user")).getLogin()+"</a></li>");
+                        out.println("<li><a href=\"/BarBookOriginal_war/logout\">Logout</a></li>");
                     }
                     else{
                         out.println("<li><a href=\"/BarBookOriginal_war/registration\">Registration</a></li>");
                         out.println("<li><a href=\"/BarBookOriginal_war/auth\">Login</a></li>");
+
                     }
                 %>
             </ul>

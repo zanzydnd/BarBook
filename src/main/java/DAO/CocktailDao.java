@@ -6,7 +6,11 @@ import utilites.DBConnector;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CocktailDao {
     public List<Cocktail> getCocktails() {
@@ -38,6 +42,41 @@ public class CocktailDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public Map<Integer,String> getCocktailsIdByName(String name){
+        Connection con;
+        Statement statement;
+        ResultSet resultSet;
+        Map<Integer,String> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        try {
+            System.out.println(name);
+            con = DBConnector.createConnection();
+            statement = con.createStatement();
+            resultSet = statement.executeQuery("select id,name from cocktail");
+            List<Cocktail> cockts = new ArrayList<>();
+            while (resultSet.next()) {
+               Cocktail cockt = new Cocktail();
+               cockt.setId(resultSet.getInt("id"));
+               cockt.setName(resultSet.getString("name"));
+               cockts.add(cockt);
+            }
+            Pattern pattern = Pattern.compile(name.toLowerCase());
+            for(Cocktail c : cockts){
+                Matcher matcher = pattern.matcher(c.getName().toLowerCase());
+                if(matcher.find()){
+
+                    map.put(c.getId(),c.getName());
+                    System.out.println("ya zashel v pattern");
+                    System.out.println(c.getId());
+                }
+            }
+            return map;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
     public List<Ingridient> getRecepie(Cocktail cocktail) {
@@ -119,8 +158,8 @@ public class CocktailDao {
                 Connection con2 = DBConnector.createConnection();
                 String query = "update cocktail set rating=" + rate + " where id =" + cockt_id;
                 Statement statement1 = con2.createStatement();
+                cocktail.setRating(rate);
                 statement1.executeUpdate(query);
-                System.out.println("!!!!");
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

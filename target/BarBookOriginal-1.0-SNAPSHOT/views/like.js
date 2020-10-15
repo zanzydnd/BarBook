@@ -1,22 +1,28 @@
+window.onload = function () {
+    var inp_likedCocktId = document.querySelector('input[name=likedCocktId]');
+    console.log(inp_likedCocktId);
+    var inp_user_id = document.querySelector('input[name=user_id]');
+    console.log(inp_user_id);
 
-$(document).ready(function () {
-    $("#cke_38").remove();
-    let click = $('1').click(function () {
+    document.querySelector('#submit').onclick = function () {
+        var params = 'likedCocktId=' + inp_likedCocktId.value + '&' + 'user_id=' + inp_user_id.value;
+        ajaxPost(params);
+    }
+}
 
-        var d = $('#form_push').serializeArray();
-        var value = CKEDITOR.instances['id_note_text'].getData();
+function ajaxPost(params) {
+    var request = new XMLHttpRequest();
 
-        $.ajax({
-            method:"POST",
-
-            url: '/cocktail',
-            data:{
-
-
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            if (request.responseText === 'Already') {
+                document.querySelector('#err').innerHTML = 'Вы уже оставляли лайк';
+            } else {
+                document.querySelector('#rate').innerHTML = request.responseText;
             }
-            .done(function( msg ) {
-                    alert( "Data Saved: " + msg );
-            })
-        });
-    });
-});
+        }
+        request.open('POST', '/BarBookOriginal_war/cocktail');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.send(params);
+    }
+}
