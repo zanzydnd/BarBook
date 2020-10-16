@@ -76,14 +76,28 @@
             $('#button').click(function (event) {
 
                 var search = $('#search').val();
-                var tags = $('#filter').serialize();
+
+                var tags = [];
+
+                var eventTypes = document.forms['filter'].elements['types[]'];
+                var len = eventTypes.length;
+
+                for (var i = 0; i < len; i++) {
+                    if (eventTypes[i].checked) {
+                        tags.push($(eventTypes[i]).val());
+                    }
+                }
                 console.log(tags);
+
                 $.ajax({
                     type: "POST", url: "Servlets.SearchServlet",
-                    data : {search: search},
-                    dataType:'json',
+                    data: {
+                        search: search,
+                        tags: JSON.stringify(tags)
+                    },
+                    dataType: 'json',
                     success: function (result) {
-                        for(var i = 0; i < result.length;i++){
+                        for (var i = 0; i < result.length; i++) {
                             $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">" + result[i]['name'] + "</a>").appendTo($("#result"));
                         }
                         // for (var a in result) {
@@ -122,7 +136,7 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="outside" value="outside">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="outside" value="сладкий">
                         <label class="form-check-label" for="outside">Сладкие</label>
                     </div>
                 </td>
@@ -130,7 +144,7 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="music" value="music">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="music" value="терпкий">
                         <label class="form-check-label" for="music">Горькие</label>
                     </div>
                 </td>
@@ -138,16 +152,8 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="art" value="art">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="art" value="свежий">
                         <label class="form-check-label" for="art">Свежие</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="new places" value="new place">
-                        <label class="form-check-label" for="new places">Новые места</label>
                     </div>
                 </td>
             </tr>
@@ -155,7 +161,7 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="early" value="early">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="early" value="джин">
                         <label class="form-check-label" for="early">Джин</label>
                     </div>
                 </td>
@@ -163,7 +169,7 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="middle" value="middle">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="middle" value="водка">
                         <label class="form-check-label" for="middle">Водка</label>
                     </div>
                 </td>
@@ -171,15 +177,22 @@
             <tr>
                 <td>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="evening" value="evening">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="evening" value="виски">
                         <label class="form-check-label" for="evening">Виски</label>
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" name="types[]" type="checkbox" id="rum" value="ром">
+                        <label class="form-check-label" for="rum">Ром</label>
+                    </div>
+                </td>
+            </tr>
         </table>
-        <input class="sub" type="submit" value="Принять" style="margin-bottom: 5px"></form>
-    <input name="search" type="text" id="search">
-    <button type="button" id="button" name="button">Button</button>
+        <input name="search" type="text" id="search">
+        <button type="button" id="button" name="button">Button</button>
 </div>
 
 <div id="result">

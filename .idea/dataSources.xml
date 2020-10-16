@@ -8,6 +8,7 @@
       <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
+        <property name="characterEncoding" value="UTF-8" />
       </driver-properties>
     </data-source>
   </component>

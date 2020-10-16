@@ -5,10 +5,7 @@ import Entities.Ingridient;
 import utilites.DBConnector;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,11 +41,92 @@ public class CocktailDao {
         return list;
     }
 
-    public List<Cocktail> getCocktailsIdByName(String name){
+
+    public List<Cocktail> getCocktailsByTags(String[] tags) {
+        Integer[] cocktails = null;
+        Connection con;
+        Statement statement;
+        List<Integer> first = null;
+        List<Integer> second = null;
+        Set<Integer> s1 = null;
+        Set<Integer> s2 = null;
+        List<Cocktail> list = new ArrayList<>();
+        try {
+            Map<Integer, List<Integer>> map = new HashMap<>();
+            for (int i = 0; i < tags.length; i++) {
+                System.out.println("+");
+                con = DBConnector.createConnection();
+                Connection con2 = DBConnector.createConnection();
+                statement = con.createStatement();
+                Statement statement2 = con2.createStatement();
+                System.out.println(tags[i]);
+                String sql1 = "select id from tags where tag='" + tags[i]+ "'";
+                ResultSet resultSetForTag = statement.executeQuery(sql1);
+                Integer tag_id = 0;
+                while(resultSetForTag.next()){
+                    tag_id = resultSetForTag.getInt("id");
+                }
+                System.out.println("-");
+                ResultSet resSetForCockt = statement2.executeQuery("select cocktail_id from cocktails_tags where tag_id=" + tag_id.toString());
+                List<Integer> ar = new ArrayList<>();
+                while (resSetForCockt.next()) {
+                    System.out.println("айди коктейлей" + resSetForCockt.getInt("cocktail_id"));
+                    ar.add(resSetForCockt.getInt("cocktail_id"));
+                }
+                System.out.println("ar" + ar);
+                map.put(tag_id, ar);
+                Integer curr = tag_id;
+                if (i > 1) {
+                    s2 = new HashSet<>(map.get(curr));
+                    s1.retainAll(s2);
+                    System.out.println(s1);
+                } else if (i == 0) {
+                    first = map.get(curr);
+                    s1 = new HashSet<>(first);
+                    System.out.println("s1" + s1);
+                } else if(i==1){
+                    second = map.get(curr);
+                    System.out.println("second " + second);
+                    s1 = new HashSet<>(first);
+                    s2 = new HashSet<>(second);
+                    s1.retainAll(s2);
+                    System.out.println(s1);
+                }
+            }
+            System.out.println("s1" + s1);
+            System.out.println("asdadsas");
+            cocktails =  s1.toArray(new Integer[s1.size()]);
+            System.out.println(cocktails[0]);
+            for (Integer id : cocktails) {
+                System.out.println("в лист id" + id);
+                list.add(this.getCocktailById(id));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Cocktail> getCocktailsByTagsAndName(String name, String[] tags) {
+        List<Cocktail> c1 = this.getCocktailsIdByName(name);
+        List<Cocktail> c2 = this.getCocktailsByTags(tags);
+        List<Cocktail> res = new ArrayList<>();
+        if (c1 == null || c2 == null)
+            return null;
+        for (int i = 0; i < c1.size(); i++) {
+            int j = 0;
+            if (c2.get(j).getId() == c1.get(i).getId()) {
+                res.add(this.getCocktailById(c2.get(j).getId()));
+            }
+        }
+        return res;
+    }
+
+    public List<Cocktail> getCocktailsIdByName(String name) {
         Connection con;
         Statement statement;
         ResultSet resultSet;
-        Map<Integer,String> map = new HashMap<>();
         List<Cocktail> list = new ArrayList<>();
         try {
             System.out.println(name);
@@ -57,15 +135,15 @@ public class CocktailDao {
             resultSet = statement.executeQuery("select id,name from cocktail");
             List<Cocktail> cockts = new ArrayList<>();
             while (resultSet.next()) {
-               Cocktail cockt = new Cocktail();
-               cockt.setId(resultSet.getInt("id"));
-               cockt.setName(resultSet.getString("name"));
-               cockts.add(cockt);
+                Cocktail cockt = new Cocktail();
+                cockt.setId(resultSet.getInt("id"));
+                cockt.setName(resultSet.getString("name"));
+                cockts.add(cockt);
             }
             Pattern pattern = Pattern.compile(name.toLowerCase());
-            for(Cocktail c : cockts){
+            for (Cocktail c : cockts) {
                 Matcher matcher = pattern.matcher(c.getName().toLowerCase());
-                if(matcher.find()){
+                if (matcher.find()) {
                     list.add(this.getCocktailById(c.getId()));
                     System.out.println("ya zashel v pattern");
                     System.out.println(c.getId());
@@ -162,7 +240,7 @@ public class CocktailDao {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }else {
+        } else {
             throw new SQLException();
         }
     }
