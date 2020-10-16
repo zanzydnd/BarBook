@@ -44,12 +44,12 @@ public class CocktailDao {
         return list;
     }
 
-    public Map<Integer,String> getCocktailsIdByName(String name){
+    public List<Cocktail> getCocktailsIdByName(String name){
         Connection con;
         Statement statement;
         ResultSet resultSet;
         Map<Integer,String> map = new HashMap<>();
-        List<String> list = new ArrayList<>();
+        List<Cocktail> list = new ArrayList<>();
         try {
             System.out.println(name);
             con = DBConnector.createConnection();
@@ -66,17 +66,16 @@ public class CocktailDao {
             for(Cocktail c : cockts){
                 Matcher matcher = pattern.matcher(c.getName().toLowerCase());
                 if(matcher.find()){
-
-                    map.put(c.getId(),c.getName());
+                    list.add(this.getCocktailById(c.getId()));
                     System.out.println("ya zashel v pattern");
                     System.out.println(c.getId());
                 }
             }
-            return map;
+            return list;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return map;
+        return list;
     }
 
     public List<Ingridient> getRecepie(Cocktail cocktail) {

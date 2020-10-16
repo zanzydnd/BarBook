@@ -23,7 +23,7 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<Integer,String> list;
+        List<Cocktail> list;
         CocktailDao dao = new CocktailDao();
         list = dao.getCocktailsIdByName(req.getParameter("search"));
         resp.setContentType("application/json");

@@ -76,17 +76,20 @@
             $('#button').click(function (event) {
 
                 var search = $('#search').val();
-
-                //console.log(search);
+                var tags = $('#filter').serialize();
+                console.log(tags);
                 $.ajax({
                     type: "POST", url: "Servlets.SearchServlet",
-                    data: {search: search},
+                    data : {search: search},
+                    dataType:'json',
                     success: function (result) {
-                        for (var a in result) {
-                            console.log(result);
-                            var obj = jQuery.parseJSON(result);
-                            $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + a + "\">" + obj[a] + "</a>").appendTo($("#result"));
+                        for(var i = 0; i < result.length;i++){
+                            $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">" + result[i]['name'] + "</a>").appendTo($("#result"));
                         }
+                        // for (var a in result) {
+                        //     console.log(result);
+                        //     $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + a + "\">" + a[a] + "</a>").appendTo($("#result"));
+                        // }
                     }
                 });
             });
@@ -113,6 +116,68 @@
     </nav>
 </div>
 <div>
+    <form id="filter">
+        <table>
+            <th>По вкусу:</th>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="outside" value="outside">
+                        <label class="form-check-label" for="outside">Сладкие</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="music" value="music">
+                        <label class="form-check-label" for="music">Горькие</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="art" value="art">
+                        <label class="form-check-label" for="art">Свежие</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="new places" value="new place">
+                        <label class="form-check-label" for="new places">Новые места</label>
+                    </div>
+                </td>
+            </tr>
+            <th>По алкоголю:</th>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="early" value="early">
+                        <label class="form-check-label" for="early">Джин</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="middle" value="middle">
+                        <label class="form-check-label" for="middle">Водка</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="evening" value="evening">
+                        <label class="form-check-label" for="evening">Виски</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <input class="sub" type="submit" value="Принять" style="margin-bottom: 5px"></form>
     <input name="search" type="text" id="search">
     <button type="button" id="button" name="button">Button</button>
 </div>
