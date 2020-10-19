@@ -159,6 +159,7 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" name="types[]" type="checkbox" id="early" value="джин">
                         <label class="form-check-label" for="early">Джин</label>
+
                     </div>
                 </td>
             </tr>
