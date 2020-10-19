@@ -114,4 +114,34 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>Servlets.ProfileServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ChangeProfileServlet</servlet-name>
+        <servlet-class>Servlets.ChangeProfileServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ChangeProfileServlet</servlet-name>
+        <url-pattern>/change_profile</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>FavCocktServlet</servlet-name>
+        <servlet-class>Servlets.FavCocktServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>FavCocktServlet</servlet-name>
+        <url-pattern>/favcockt</url-pattern>
+    </servlet-mapping>
 </web-app>

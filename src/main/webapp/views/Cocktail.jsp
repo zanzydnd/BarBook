@@ -36,6 +36,7 @@
                     out.println("<li><a href=\"/BarBookOriginal_war/auth\">Login</a></li>");
                 }
             %>
+
         </ul>
     </nav>
 </div>
@@ -43,16 +44,10 @@
         <%if(session.getAttribute("user")!= null){%>
 <form method="post" action=<%out.print("/BarBookOriginal_war/cocktail?id=" + cocktail.getId());%>>
             <button type = "submit"  name="likedCocktId" value= <%out.print("\""  +cocktail.getId() + "\"");%> > Мне нравится <%out.print(cocktail.getRating());%></button>
-        </form>
-<%--
-<form id = "like">
-    <input type="hidden" name="user_id" value="${user.getId()}">
-    <input type="hidden" name="likedCocktId" value ="${cocktail.getId()}">
-    <button type = "button" name="submit" value="Submit">Мне нравится <div id="rate">${cocktail.getRating()}</div></button>
 </form>
-<div id ="err"></div>
-<script src="like.js"></script>
-   --%>
+    <form method="post" action="/BarBookOriginal_war/favcockt">
+        <button type="submit" name="favcocktid" value="${cocktail.getId()}">Мой любимый коктейль</button>
+    </form>
             <%
                 if(request.getAttribute("errMsg") != null){
                     out.print("<p>Вы уже оставляли лайк</p>");

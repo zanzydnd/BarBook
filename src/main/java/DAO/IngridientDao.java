@@ -4,30 +4,27 @@ import Entities.Cocktail;
 import Entities.Ingridient;
 import utilites.DBConnector;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IngridientDao {
     public List<Cocktail> getCoctailsByIngridient(Ingridient ingridient){
         int idIng = ingridient.getId();
-
         Connection con;
-        Statement statement;
         ResultSet resultSet;
         List<Cocktail> list = new ArrayList<>();
         try{
             con = DBConnector.createConnection();
-            statement = con.createStatement();
-            resultSet = statement.executeQuery("select cocktid,ingid from recipie where ingid=" + idIng);
+            PreparedStatement ps = con.prepareStatement("select cocktid,ingid from recipie where ingid=?");
+            ps.setInt(1,idIng);
+            resultSet = ps.executeQuery();
             while(resultSet.next()){
                     int cocktid = resultSet.getInt("cocktid");
                     Connection con2 = DBConnector.createConnection();
-                    Statement statement2 = con2.createStatement();
-                    ResultSet finalSet = statement2.executeQuery("select * from cocktail where id=" + cocktid);
+                    PreparedStatement ps2 = con2.prepareStatement("select * from cocktail where id=?");
+                    ps2.setInt(1,cocktid);
+                    ResultSet finalSet = ps2.executeQuery();
                     while(finalSet.next()){
                         Cocktail cocktail = new Cocktail();
                         cocktail.setRating(finalSet.getInt("rating"));
@@ -50,7 +47,6 @@ public class IngridientDao {
         Connection con;
         Statement statement;
         ResultSet resultSet;
-        Integer idDB;
         List<Ingridient> list = new ArrayList<>();
         try{
             con = DBConnector.createConnection();

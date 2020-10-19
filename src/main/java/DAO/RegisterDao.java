@@ -2,10 +2,9 @@ package DAO;
 
 import Entities.User;
 import utilites.DBConnector;
+import utilites.Hashing;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class RegisterDao {
     public String registerUser(User user)
@@ -23,6 +22,17 @@ public class RegisterDao {
         try
         {
             con = DBConnector.createConnection();
+            Connection con2 = DBConnector.createConnection();
+            PreparedStatement ps = con2.prepareStatement("select login from user where login=?");
+            ps.setString(1,login);
+            ResultSet resultSet = ps.executeQuery();
+            //Statement statement = con2.createStatement();
+            //ResultSet resultSet = statement.executeQuery("select login from user where login='" + login + "'");
+            while(resultSet.next()){
+                String s = resultSet.getString("login");
+                if (s.equals(login))
+                    throw new SQLException();
+            }
             String query = "insert into user(login,name,password,email,img,favouriteCocktail_id," +
                     "information) values (?,?,?,?,?,?,?)"; //Insert user details into the table 'USERS'
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements here to insert bunch of data

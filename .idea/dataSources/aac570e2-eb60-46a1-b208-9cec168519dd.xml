@@ -1253,6 +1253,7 @@ SELECT|sys.sys_config:null
     <column id="362" parent="295" name="img">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
+      <DefaultExpression>&apos;img\\default.png&apos;</DefaultExpression>
     </column>
     <column id="363" parent="295" name="favouriteCocktail_id">
       <Position>5</Position>

@@ -100,10 +100,6 @@
                         for (var i = 0; i < result.length; i++) {
                             $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">" + result[i]['name'] + "</a>").appendTo($("#result"));
                         }
-                        // for (var a in result) {
-                        //     console.log(result);
-                        //     $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + a + "\">" + a[a] + "</a>").appendTo($("#result"));
-                        // }
                     }
                 });
             });
@@ -193,6 +189,7 @@
         </table>
         <input name="search" type="text" id="search">
         <button type="button" id="button" name="button">Button</button>
+    </form>
 </div>
 
 <div id="result">

@@ -1,6 +1,5 @@
 package utilites;
 
-import DAO.Hashing;
 import DAO.LoginDao;
 import DAO.UserDao;
 import Entities.User;
