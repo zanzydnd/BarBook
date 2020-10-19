@@ -12,11 +12,10 @@ public class LogoutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie: cookies){
-            cookie.setValue("adsas");
-            cookie.setMaxAge(1);
+        for(int i = 0; i < cookies.length;i++){
+            cookies[i].setMaxAge(0);
         }
-        request.getSession().removeAttribute("user");
-        response.sendRedirect(super.getServletContext().getContextPath());
+        request.getSession().setAttribute("user",null);
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

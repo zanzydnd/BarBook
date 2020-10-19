@@ -10,12 +10,11 @@ import java.io.IOException;
 
 public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
-        if(cookies.length > 0){
+        if(cookies.length > 0 && request.getSession().getAttribute("user") != null){
             System.out.println("Я использую куки");
             LoginDao ld = new LoginDao();
             User user = new User();
