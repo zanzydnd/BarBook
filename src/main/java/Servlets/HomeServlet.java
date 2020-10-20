@@ -37,8 +37,9 @@ public class HomeServlet extends HttpServlet {
             user.setLogin(login);
             user = ld.authenticateUser(user);
             request.getSession().setAttribute("user",user);
+            request.setAttribute("user",user);
         }
-        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/main.jsp");
+        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/main.ftl");
         rqDispatcher.forward(request,response);
     }
 }

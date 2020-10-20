@@ -1,78 +1,133 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Lora);
-
-        body {
-            margin: 0;
-        }
-
-        h2 {
-            font-family: monospace;
-            color: #606060;
-        }
-
-        ul {
-            list-style: none;
-            margin: 0 auto;
-        }
-
-        a {
-            text-decoration: none;
-            font-family: 'Lora', serif;
-            transition: .5s linear;
-        }
-
-        nav {
-            display: block;
-            width: 79%;
-            margin: 0 auto;
-        }
-
-        .two ul {
-            background: #D4E7EE;
-            padding: 0;
-        }
-
-        .two li {
-            float: left;
-        }
-
-        .two a {
-            display: block;
-            padding: 1em;
-            border-right: 1px solid #ADC0CE;
-            background: rgba(173, 192, 206, .3);
-            color: #29838C;
-        }
-
-        .two a:hover {
-            background: #ADC0CE
-        }
-
-        .men {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
+          rel="stylesheet">
+    <title>Cocktail Info</title>
+    <style><#include "style.css"></style>
 </head>
-<body>
-<div class="men">
-    <nav class="two">
-        <ul>
-            <li><a href="/BarBookOriginal_war/">Home</a></li>
-            <li><a href="/BarBookOriginal_war/cocktaillist">Cocktails</a></li>
-            <li><a href="/BarBookOriginal_war/ingridients">Ingridients</a></li>
 
-        </ul>
-    </nav>
+<body>
+
+<#include "menu.ftl">
+
+<div class="coctail__info">
+    <div class="container">
+        <div class="coctail__inner">
+            <div class="coctail__header">
+                <div class="coctail__name">${cocktail.name}</div>
+            </div>
+
+            <div class="cocktail-bg">
+                <img src="${cocktail.image}" alt="" class="cocktail-img">
+            </div>
+
+            <div class="cocktail__content">
+
+                <span class="coctail__sostav">Состав коктейля <b class="helper">${cocktail.name}</b></span>
+
+                <div class="coctail__block-photo">
+                    <#list ingridients as ingridient>
+                        <a href="/BarBookOriginial_war/ingridient?id=${ingridient.id}" class="cocktail-ingredPhoto">
+                            <img src="${ingridient.id}" alt="" class="coctail__block-img">
+                        </a>
+                    </#list>
+                </div>
+
+                <div class="coctail__block-ingridient">
+                    <div class="coctail__block-ingredients">
+                        <div class="coctail__block-ingredientTitle">Необходимые ингредиенты</div>
+                        <div class="ingredient-itemInner">
+
+                            <div class="ingredient-item">
+                                <div class="ingredient-name">Проссекко</div>
+                                <div class="ingredient__count"> 100
+                                    <b class="font-helper">мл</b>
+                                </div>
+                            </div>
+
+                            <div class="ingredient-item">
+                                <div class="ingredient-name">Проссекко</div>
+                                <div class="ingredient__count"> 100
+                                    <b class="font-helper">мл</b>
+                                </div>
+                            </div>
+
+                            <div class="ingredient-item">
+                                <div class="ingredient-name">Проссекко</div>
+                                <div class="ingredient__count"> 100
+                                    <b class="font-helper">мл</b>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="recipe">
+                    <span class="recipe__title">Рецепт коктейля <b class="helper">${cocktail.name}</b></span>
+
+                        <div class="recipe__info">
+                            <div class="recipe__list">
+                                <#list str as st>
+                                    <div class="recipe__list-item">
+                                        <div class="recipe__list-count">--</div>
+                                        <div class="recipe__list-name">${st.text}</div>
+                                    </div>
+                                </#list>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comments">
+                <div class="comments__header">
+                    <div class="comments__title">Комментарии</div>
+                </div>
+                <div class="comments__inner">
+                    <div class="comments__block-text">
+                        <#if user??>
+                            <form action="/" method="post" class="send__comment">
+                                <textarea class="text__comment" name="text" id="text" rows="5"
+                                          placeholder="Оставьте ваш комментарий"></textarea>
+                                <div class="btn-comm">
+                                    <button type="button" class="comments__btn">Отправить</button>
+                                </div>
+                            </form>
+                        <#else>
+                            <div class="comments__text">Чтобы принять участие в диалоге, необходимо
+                                <a href="#" class="color-helper">авторизоваться</a>.
+                            </div>
+                        </#if>
+
+
+                        <div class="comments__list">
+                            <#list comments as comment>
+                                <div class="comments__list-item">
+                                    <div class="comments__avatar">
+                                        <img src="${comment.user.img}" alt="" class="comments__avatar-img">
+                                    </div>
+                                    <div class="comments__info">
+                                        <div class="comment__head">
+                                            <div class="comments__name">${comment.user.name}</div>
+                                        </div>
+                                        <div class="comments__text">
+                                            ${comment.comm}
+                                        </div>
+                                    </div>
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
+
 </html>
