@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
@@ -36,7 +36,8 @@
                     dataType: 'json',
                     success: function (result) {
                         for (var i = 0; i < result.length; i++) {
-                            $("<div>").html("<a href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">" + result[i]['name'] + "</a>").appendTo($("#result"));
+                            $("<div class= \"cocktail__img\">").html("<img src=\"" + result[i]['img'] +"\" class=\"cocktails__photo\" alt=\"\"/>" ).appendTo($("#result"));
+                            $("<div class=\"cocktails__content\">").html("<h4 class=\"cocktail__name\">" + result[i]['name'] + "</h4>" + "<a  class=\"readmore\" href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">Read more</a>").appendTo($("#result"));
                         }
                     }
                 });
@@ -46,97 +47,55 @@
 </head>
 
 
+<body>
 <#include "menu.ftl">
-
-
-<form id="filter">
-    <table>
-        <th>По вкусу:</th>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="outside" value="сладкий">
-                    <label class="form-check-label" for="outside">Сладкие</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="music" value="терпкий">
-                    <label class="form-check-label" for="music">Горькие</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="art" value="свежий">
-                    <label class="form-check-label" for="art">Свежие</label>
-                </div>
-            </td>
-        </tr>
-        <th>По алкоголю:</th>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="early" value="джин">
-                    <label class="form-check-label" for="early">Джин</label>
-
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="middle" value="водка">
-                    <label class="form-check-label" for="middle">Водка</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="evening" value="виски">
-                    <label class="form-check-label" for="evening">Виски</label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="types[]" type="checkbox" id="rum" value="ром">
-                    <label class="form-check-label" for="rum">Ром</label>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <input name="search" type="text" id="search">
-    <button type="button" id="button" name="button">Button</button>
-</form>
-</html>
-
-<div id="result">
-
-</div>
-
-
 
 <div class="cocktails">
     <div class="container">
-        <div class="cocktails__inner">
+        <div class="search__system">
+            <form id="filter" class="filter">
+                <input type="search" id= "search" class="search__field" placeholder="Search...">
 
+                <select name="filter" id="filter_cat" class="filter__item">
+                    <option value="">Алкоголь</option>
+                    <option name="types[]" value="виски">Виски</option>
+                    <option name="types[]" value="ром">Ром</option>
+                    <option name="types[]" value="водка">Водка</option>
+                    <option name="types[]" value="джин">Джин</option>
+                </select>
+
+                <select name="filter" id="filter_ing" class="filter__item">
+                    <option value="">Вкус</option>
+                    <option name="types[]" value="сладкий">Сладкий</option>
+                    <option name="types[]" value="свежий">Свежий</option>
+                    <option name="types[]" value="терпкий">Терпкий</option>
+                </select>
+
+                <select name="filter" id="filter" class="filter__item">
+                    <option value="">Градус</option>
+                    <option name="types[]" value="Безалкогольные">Безалкогольные</option>
+                    <option name="types[]" value="Крепкие">Крепкие</option>
+                    <option name="types[]" value="Слабоалкогольные">Слабоалкогольные</option>
+                </select>
+                <button id="button" class="filter__btn search__btn" type="button">Поиск</button>
+            </form>
+        </div>
+
+        <div id="result">
+
+        </div>
+
+        <div class="cocktails__inner">
             <div class="cocktail__item">
                 <div class="cocktail__item-inner">
                     <#list cocktails as cocktail>
-                    <div class="cocktail__img">
-                        <img src="${cocktail.img}" class="cocktails__photo" alt=""/>
-                    </div>
-                    <div class="cocktails__content">
-                        <h4 class="cocktail__name">${cocktail.name}</h4>
-                        <p class="cocktails__info">${cocktail.inf}</p>
-                        <a class="readmore" href="/BarBookOriginal_war/cocktail?id=${cocktail.id}">Read more</a>
-                    </div>
+                        <div class="cocktail__img">
+                            <img src="${cocktail.img}" class="cocktails__photo" alt=""/>
+                        </div>
+                        <div class="cocktails__content">
+                            <h4 class="cocktail__name">${cocktail.name}</h4>
+                            <a class="readmore" href="/BarBookOriginal_war/cocktail?id=${cocktail.id}">Read more</a>
+                        </div>
                     </#list>
                 </div>
             </div>
@@ -144,4 +103,5 @@
     </div>
 </div>
 
-<body>
+</body>
+</html>

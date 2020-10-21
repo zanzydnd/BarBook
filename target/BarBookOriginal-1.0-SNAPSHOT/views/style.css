@@ -1,4 +1,4 @@
-    body {
+body {
     margin: 0;
     background-color: burlywood;
 
@@ -17,6 +17,133 @@ h1, h2, h3, h4 {
 
 p {
     margin: 0 0 10px;
+}
+
+/*Stat*/
+.statistika {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.stat__like {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    margin-right: 25px;
+}
+
+.stat__like:hover .stat__heart{
+    color: #ec118f;
+}
+
+.stat__like:hover  .stat__text{
+    color: #ec118f;
+}
+
+.stat__like:hover  .stat__count{
+    color: #ec118f;
+}
+
+.stat__like:focus .stat__heart{
+    color: #ec118f;
+}
+
+.stat__like:focus .stat__text{
+    color: #ec118f;
+}
+
+.stat__like:focus .stat__count{
+    color: #ec118f;
+}
+
+.stat__heart {
+    font-size: 16px;
+    color: #999;
+    margin-right: 5px;
+
+    transition: color 0.6s linear;
+}
+
+.stat__text {
+    font-size: 16px;
+    color: #999999;
+    margin-right: 5px;
+
+    transition: color 0.6s linear;
+}
+
+.stat__count {
+    font-size: 16px;
+    color: #999;
+
+    transition: color 0.6s linear;
+}
+
+/*Search*/
+.search__system{
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+
+    margin-right: 20px;
+}
+
+.search__field{
+    margin-right: 15px;
+    padding: 8px 30px;
+    background: white;
+    border: none;
+}
+
+.search__field:focus{
+    outline: 0;
+}
+
+.search__field::placeholder{
+    margin-left: 5px;
+}
+
+.search__btn{
+    padding: 8px 30px;
+    border: 0;
+    background: #BF431F;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+
+.filter__item{
+    padding: 8px 30px;
+    background: white;
+    border: 0;
+}
+
+.filter__item:focus{
+    outline: 0;
+}
+
+/*Description*/
+.description {
+    padding: 22px;
+}
+
+.description__text {
+    width: 80%;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 24px;
+    color: black;
+    margin: 20px 0;
+    font-style: italic;
 }
 
 
@@ -572,7 +699,7 @@ p {
 }
 
 .coctail__name {
-    font-size: 48px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 4px;
 }

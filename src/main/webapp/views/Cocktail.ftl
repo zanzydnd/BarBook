@@ -19,6 +19,21 @@
         <div class="coctail__inner">
             <div class="coctail__header">
                 <div class="coctail__name">${cocktail.name}</div>
+                <#if user??>
+                <div class="statistika">
+                    <form class="stat__like" action="/BarBookOriginal_war/cocktail?id=${cocktail.id}" method="post">
+                        <button type="submit" name="likedCocktId" value="${cocktail.id}">Мне нравится ${cocktail.rating}</button>
+                    </form>
+                        <#if errMsg??>
+                            <a>Вы уже оставляли лайк</a>
+                        </#if>
+                    <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
+                        <button type="submit" name= "favcocktid" value="${cocktail.id}">Мой любимый коктейль</button>
+                    </form>
+                </div>
+                <#else>
+                    <a href="/BarBookOriginal_war/auth" class="stat__like">Чтобы оставить лайк авторизируйтесь.</a>
+                </#if>
             </div>
 
             <div class="cocktail-bg">
@@ -37,51 +52,28 @@
                     </#list>
                 </div>
 
-                <div class="coctail__block-ingridient">
-                    <div class="coctail__block-ingredients">
-                        <div class="coctail__block-ingredientTitle">Необходимые ингредиенты</div>
-                        <div class="ingredient-itemInner">
-
-                            <div class="ingredient-item">
-                                <div class="ingredient-name">Проссекко</div>
-                                <div class="ingredient__count"> 100
-                                    <b class="font-helper">мл</b>
-                                </div>
-                            </div>
-
-                            <div class="ingredient-item">
-                                <div class="ingredient-name">Проссекко</div>
-                                <div class="ingredient__count"> 100
-                                    <b class="font-helper">мл</b>
-                                </div>
-                            </div>
-
-                            <div class="ingredient-item">
-                                <div class="ingredient-name">Проссекко</div>
-                                <div class="ingredient__count"> 100
-                                    <b class="font-helper">мл</b>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="recipe">
+                <div class="recipe">
                     <span class="recipe__title">Рецепт коктейля <b class="helper">${cocktail.name}</b></span>
-
-                        <div class="recipe__info">
-                            <div class="recipe__list">
-                                <#list str as st>
-                                    <div class="recipe__list-item">
-                                        <div class="recipe__list-count">--</div>
-                                        <div class="recipe__list-name">${st.text}</div>
-                                    </div>
-                                </#list>
-                            </div>
+                    <div class="recipe__info">
+                        <div class="recipe__list">
+                            <#list str as s>
+                                <div class="recipe__list-item">
+                                    <div class="recipe__list-count">--</div>
+                                    <div class="recipe__list-name">${s}</div>
+                                </div>
+                            </#list>
                         </div>
                     </div>
                 </div>
+
+                <div class="description">
+                    <span class="recipe__title">Описание коктейля <b class="helper">${cocktail.name}</b></span>
+                    <div class="description__text">
+                        ${cocktail.inf}
+                    </div>
+                </div>
             </div>
+
 
             <div class="comments">
                 <div class="comments__header">
@@ -90,20 +82,20 @@
                 <div class="comments__inner">
                     <div class="comments__block-text">
                         <#if user??>
-                            <form action="/" method="post" class="send__comment">
-                                <textarea class="text__comment" name="text" id="text" rows="5"
+                            <form action="/BarBookOriginal_war/CommentServlet" method="post" class="send__comment">
+                                <textarea class="text__comment" name="comment" id="text" rows="5"
                                           placeholder="Оставьте ваш комментарий"></textarea>
+                                <input type="hidden" name="cocktail_id" value="${cocktail.id}">
+                                <input type="hidden" name="user_id" value="${user.id}">
                                 <div class="btn-comm">
-                                    <button type="button" class="comments__btn">Отправить</button>
+                                    <button type="submit" class="comments__btn">Отправить</button>
                                 </div>
                             </form>
                         <#else>
                             <div class="comments__text">Чтобы принять участие в диалоге, необходимо
-                                <a href="#" class="color-helper">авторизоваться</a>.
+                                <a href="/auth" class="color-helper">авторизоваться</a>.
                             </div>
                         </#if>
-
-
                         <div class="comments__list">
                             <#list comments as comment>
                                 <div class="comments__list-item">
@@ -124,7 +116,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
