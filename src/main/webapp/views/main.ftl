@@ -19,7 +19,7 @@
                 <a class="nav__link" href="/BarBookOriginal_war/">Home</a>
                 <a class="nav__link" href="#">Bartenders</a>
                 <a class="nav__link" href="/BarBookOriginal_war/cocktlist">Cocktails</a>
-                <a class="nav__link" href="#">Contests</a>
+                <a class="nav__link" href="/BarBookOriginal_war/contestlist">Contests</a>
                 <a class="nav__link" href="/BarBookOriginal_war/ingridientlist">Ingredients</a>
                 <#if user??>
                     <a class="nav__link" href="/BarBookOriginal_war/profile">${user.login}</a>

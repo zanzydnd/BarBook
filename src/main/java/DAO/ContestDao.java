@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ContestDao {
-    public List<Contest> getAllContest() {
+    public static List<Contest> getAllContest() {
         Connection con;
         Statement statement;
         ResultSet resultSet;
@@ -24,11 +24,12 @@ public class ContestDao {
             resultSet = statement.executeQuery("select * from contests");
             while (resultSet.next()) {
                 Contest contest = new Contest();
-                if(resultSet.getString("statement").equals("active")) {
-                    contest.setStatement(resultSet.getString("statement"));
+                if(resultSet.getString("statment").equals("active")) {
+                    contest.setStatement(resultSet.getString("statment"));
                     contest.setHref(resultSet.getString("href"));
                     contest.setName(resultSet.getString("name"));
                     contest.setInfo(resultSet.getString("info"));
+                    contest.setImg(resultSet.getString("img"));
                     contest.setId(resultSet.getInt("id"));
                     Date date = resultSet.getDate("date");
                     contest.setDate(date);
