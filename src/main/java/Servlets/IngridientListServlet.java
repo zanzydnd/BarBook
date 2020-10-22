@@ -19,7 +19,7 @@ public class IngridientListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Ingridient> list = IngridientDao.getAllIngridients();
         request.setAttribute("ingridients",list);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/ingridientlist.jsp" );
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/ingridients.ftl" );
         requestDispatcher.forward(request,response);
     }
 }

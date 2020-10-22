@@ -195,5 +195,13 @@
         <url-pattern>/favcockt</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>IngridientServlet</servlet-name>
+        <servlet-class>Servlets.IngridientServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>IngridientServlet</servlet-name>
+        <url-pattern>/ingridient</url-pattern>
+    </servlet-mapping>
 </web-app>

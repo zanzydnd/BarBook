@@ -50,7 +50,7 @@ public class ChangeProfileServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/profile_change.jsp");
+        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/profile_change.ftl");
         rqDispatcher.forward(request, response);
     }
 }

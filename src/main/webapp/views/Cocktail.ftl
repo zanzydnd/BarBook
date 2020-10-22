@@ -25,6 +25,7 @@
                         <button type="submit" name="likedCocktId" value="${cocktail.id}">Мне нравится ${cocktail.rating}</button>
                     </form>
                         <#if errMsg??>
+                            <br>
                             <a>Вы уже оставляли лайк</a>
                         </#if>
                     <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
@@ -32,6 +33,7 @@
                     </form>
                 </div>
                 <#else>
+                    <br>
                     <a href="/BarBookOriginal_war/auth" class="stat__like">Чтобы оставить лайк авторизируйтесь.</a>
                 </#if>
             </div>
@@ -120,5 +122,4 @@
     </div>
 </div>
 </body>
-
 </html>

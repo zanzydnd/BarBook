@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.List;
+
 public class Cocktail {
     private String img;
     private Integer id;
@@ -7,7 +9,15 @@ public class Cocktail {
     private String inf;
     private int rating;
     private String recipie;
+    private List<Ingridient> ingridients;
 
+    public List<Ingridient> getIngridients(){
+        return ingridients;
+    }
+
+    public void setIngridients(List<Ingridient> list){
+        ingridients = list;
+    }
 
     public String getRecipie() {
         return recipie;

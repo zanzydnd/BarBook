@@ -84,7 +84,7 @@ public class CocktailDao {
                     first = map.get(curr);
                     s1 = new HashSet<>(first);
                     System.out.println("s1" + s1);
-                } else if(i==1){
+                } else{
                     second = map.get(curr);
                     System.out.println("second " + second);
                     s1 = new HashSet<>(first);
@@ -197,8 +197,9 @@ public class CocktailDao {
         Cocktail res = new Cocktail();
         try {
             Connection con = DBConnector.createConnection();
-            Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from cocktail where id=" + id);
+            PreparedStatement statement = con.prepareStatement("select * from cocktail where id=?");
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res.setId(id);
                 res.setRecipie(resultSet.getString("recipie_info"));

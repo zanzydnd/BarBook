@@ -71,4 +71,23 @@ public class IngridientDao {
         }
         return list;
     }
+
+    public static Ingridient getIngredientById(Integer id){
+        Ingridient res = new Ingridient();
+        try {
+            Connection con = DBConnector.createConnection();
+            PreparedStatement statement = con.prepareStatement("select * from ingridient where id=?");
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                res.setId(id);
+                res.setInf(resultSet.getString("information"));
+                res.setImg(resultSet.getString("img"));
+                res.setName(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }
