@@ -9,10 +9,28 @@ public class Cocktail {
     private String inf;
     private int rating;
     private String recipie;
+    private String smallImg;
     private List<Ingridient> ingridients;
+    private String content_type;
+
+    public String getContent_type() {
+        return content_type;
+    }
+
+    public void setContent_type(String content_type) {
+        this.content_type = content_type;
+    }
 
     public List<Ingridient> getIngridients(){
         return ingridients;
+    }
+
+    public String getSmallImg() {
+        return smallImg;
+    }
+
+    public void setSmallImg(String smallImg) {
+        this.smallImg = smallImg;
     }
 
     public void setIngridients(List<Ingridient> list){

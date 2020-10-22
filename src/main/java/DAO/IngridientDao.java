@@ -32,6 +32,7 @@ public class IngridientDao {
                         cocktail.setId(finalSet.getInt("id"));
                         cocktail.setImg(finalSet.getString("img"));
                         cocktail.setName(finalSet.getString("name"));
+                        cocktail.setSmallImg(finalSet.getString("smallImg"));
                         list.add(cocktail);
                     }
             }
@@ -60,8 +61,10 @@ public class IngridientDao {
                 Ingridient ingridient = new Ingridient();
                 ingridient.setImg(img);
                 ingridient.setInf(inf);
+                ingridient.setSmallImg(resultSet.getString("smallImg"));
                 ingridient.setId(id);
                 ingridient.setName(name);
+                ingridient.setContent_type(resultSet.getString("content_type"));
                 list.add(ingridient);
             }
             return list;
@@ -84,6 +87,8 @@ public class IngridientDao {
                 res.setInf(resultSet.getString("information"));
                 res.setImg(resultSet.getString("img"));
                 res.setName(resultSet.getString("name"));
+                res.setSmallImg(resultSet.getString("smallImg"));
+                res.setContent_type(resultSet.getString("content_type"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

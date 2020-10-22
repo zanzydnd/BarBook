@@ -31,6 +31,8 @@ public class CocktailDao {
                 cocktail.setId(id);
                 cocktail.setImg(img);
                 cocktail.setInf(inf);
+                cocktail.setSmallImg(resultSet.getString("smallImg"));
+                cocktail.setContent_type(resultSet.getString("content_type"));
                 cocktail.setRating(rating);
                 list.add(cocktail);
             }
@@ -183,6 +185,8 @@ public class CocktailDao {
                     ingridient.setName(finalSet.getString("name"));
                     ingridient.setInf(finalSet.getString("information"));
                     ingridient.setImg(finalSet.getString("img"));
+                    ingridient.setSmallImg(finalSet.getString("smallImg"));
+                    ingridient.setContent_type(finalSet.getString("content_type"));
                     list.add(ingridient);
                 }
             }
@@ -207,6 +211,8 @@ public class CocktailDao {
                 res.setName(resultSet.getString("name"));
                 res.setImg(resultSet.getString("img"));
                 res.setInf(resultSet.getString("information"));
+                res.setSmallImg(resultSet.getString("smallImg"));
+                res.setContent_type(resultSet.getString("content_type"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -99,16 +99,25 @@
     <servlet>
         <servlet-name>CocktailListServlet</servlet-name>
         <servlet-class>Servlets.CocktailListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>Servlets.SearchServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/Servlets.SearchServlet</url-pattern>
+
     </servlet-mapping>
 
     <servlet-mapping>
@@ -119,6 +128,10 @@
     <servlet>
         <servlet-name>IngridientListServlet</servlet-name>
         <servlet-class>Servlets.IngridientListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -129,7 +142,12 @@
     <servlet>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <servlet-class>Servlets.AutoCompleteServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <url-pattern>/autocomplete</url-pattern>
@@ -138,6 +156,10 @@
     <servlet>
         <servlet-name>CocktailServlet</servlet-name>
         <servlet-class>Servlets.CocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -148,6 +170,10 @@
     <servlet>
         <servlet-name>CommnentServlet</servlet-name>
         <servlet-class>Servlets.CommentServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
@@ -158,6 +184,10 @@
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>Servlets.LogoutServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -168,6 +198,10 @@
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>Servlets.ProfileServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -178,6 +212,10 @@
     <servlet>
         <servlet-name>ChangeProfileServlet</servlet-name>
         <servlet-class>Servlets.ChangeProfileServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -188,6 +226,10 @@
     <servlet>
         <servlet-name>FavCocktServlet</servlet-name>
         <servlet-class>Servlets.FavCocktServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
@@ -198,10 +240,38 @@
     <servlet>
         <servlet-name>IngridientServlet</servlet-name>
         <servlet-class>Servlets.IngridientServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>IngridientServlet</servlet-name>
         <url-pattern>/ingridient</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ContestListServlet</servlet-name>
+        <servlet-class>Servlets.ContestListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ContestListServlet</servlet-name>
+        <url-pattern>/contestlist</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>Servlets.ImageServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/img</url-pattern>
     </servlet-mapping>
 </web-app>

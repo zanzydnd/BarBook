@@ -5,8 +5,26 @@ public class Ingridient {
     private Integer id;
     private String name;
     private String inf;
+    private String smallImg;
+    private String content_type;
+
+    public void setContent_type(String content_type) {
+        this.content_type = content_type;
+    }
+
+    public String getContent_type() {
+        return content_type;
+    }
 
     public Ingridient(){
+    }
+
+    public String getSmallImg() {
+        return smallImg;
+    }
+
+    public void setSmallImg(String smallImg) {
+        this.smallImg = smallImg;
     }
 
     public Ingridient(int id , String name, String inf, String img){

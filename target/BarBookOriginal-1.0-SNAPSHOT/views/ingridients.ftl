@@ -22,7 +22,7 @@
                 <div class="ingred__block-photo">
                 <#list ingridients as ingridient>
                     <a href="/BarBookOriginal_war/ingridient?id=${ingridient.id}" class="ingred__block-item">
-                        <img src="${ingridient.img}" class="ingred-img" alt="">
+                        <img src="/BarBookOriginal_war/img?image_path=${ingridient.smallImg}" class="ingred-img" alt="">
                         <div class="ingred__name">${ingridient.name}</div>
                     </a>
                 </#list>

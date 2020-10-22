@@ -39,7 +39,7 @@
             </div>
 
             <div class="cocktail-bg">
-                <img src="${cocktail.img}" alt="" class="cocktail-img">
+                <img src="/BarBookOriginal_war/img?image_path=${cocktail.img}" alt="" class="cocktail-img">
             </div>
 
             <div class="cocktail__content">
@@ -48,8 +48,8 @@
 
                 <div class="coctail__block-photo">
                     <#list ingridients as ingridient>
-                        <a href="/BarBookOriginial_war/ingridient?id=${ingridient.id}" class="cocktail-ingredPhoto">
-                            <img src="${ingridient.img}" alt="" class="coctail__block-img">
+                        <a href="/BarBookOriginal_war/ingridient?id=${ingridient.id}" class="cocktail-ingredPhoto">
+                            <img src="/BarBookOriginal_war/img?image_path=${ingridient.smallImg}" alt="" class="coctail__block-img">
                         </a>
                     </#list>
                 </div>
