@@ -1,15 +1,19 @@
 package DAO;
 
+import Entities.Cocktail;
 import Entities.User;
 import utilites.DBConnector;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
     public User getUserById(Integer id){
         Connection con = DBConnector.createConnection();
         String query = "select * from user where id=?";
         User res = new User();
+        CocktailDao dao = new CocktailDao();
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1,id);
@@ -17,13 +21,21 @@ public class UserDao {
             while (resultSet.next()) {
                 res.setId(id);
                 res.setInformation(resultSet.getString("information"));
-                res.setRating(resultSet.getInt("rate"));
                 res.setName(resultSet.getString("name"));
                 res.setEmail(resultSet.getString("email"));
                 res.setLogin(resultSet.getString("login"));
-                res.setFavCockt(resultSet.getInt("favouriteCocktail_id"));
                 res.setImg(resultSet.getString("img"));
             }
+            Connection connection = DBConnector.createConnection();
+            PreparedStatement statement = con.prepareStatement("select * from user_favourite_cocktail where user_id = ?");
+            statement.setInt(1,id);
+            ResultSet resultSet1 = statement.executeQuery();
+            List<Cocktail> list = new ArrayList<>();
+            while(resultSet1.next()){
+                Cocktail cocktail = dao.getCocktailById(resultSet1.getInt("cocktail_id"));
+                list.add(cocktail);
+            }
+            res.setFavCocktails(list);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +52,6 @@ public class UserDao {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setString(1,info);
                 ps.setString(2,name);
-                //ps.setInt(3,fav_cockt);
                 ps.setString(3,pathFile);
                 ps.executeUpdate();
             } else {
@@ -48,7 +59,6 @@ public class UserDao {
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setString(1,info);
                 ps.setString(2,name);
-                //ps.setInt(3,fav_cockt);
                 ps.executeUpdate();
             }
         }

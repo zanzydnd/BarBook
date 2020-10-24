@@ -31,6 +31,7 @@ public class ContestDao {
                     contest.setInfo(resultSet.getString("info"));
                     contest.setImg(resultSet.getString("img"));
                     contest.setId(resultSet.getInt("id"));
+                    contest.setHtml_id(resultSet.getString("html_id"));
                     Date date = resultSet.getDate("date");
                     contest.setDate(date);
                     list.add(contest);

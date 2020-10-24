@@ -15,7 +15,6 @@ public class RegisterDao {
         String password = Hashing.md5Custom(user.getPassword());
         String img = user.getImg();
         String information = user.getInformation();
-        Integer favCocktail = user.getFavCockt();
 
         Connection con = null;
         PreparedStatement preparedStatement = null;
@@ -33,21 +32,15 @@ public class RegisterDao {
                 if (s.equals(login))
                     throw new SQLException();
             }
-            String query = "insert into user(login,name,password,email,img,favouriteCocktail_id," +
-                    "information) values (?,?,?,?,?,?,?)"; //Insert user details into the table 'USERS'
+            String query = "insert into user(login,name,password,email,img," +
+                    "information) values (?,?,?,?,?,?)"; //Insert user details into the table 'USERS'
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements here to insert bunch of data
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, email);
             preparedStatement.setString(5,img);
-            if(favCocktail != null) {
-                preparedStatement.setString(6, Integer.toString(favCocktail));
-            }
-            else{
-                preparedStatement.setString(6, null);
-            }
-            preparedStatement.setString(7,information);
+            preparedStatement.setString(6,information);
 
             int i= preparedStatement.executeUpdate();
 

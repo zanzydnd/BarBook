@@ -16,8 +16,6 @@
 <a href="/BarBookOriginal_war/change_profile">Редактировать профиль</a>
 <%
     User user = (User)session.getAttribute("user");
-    System.out.println("ussssser " + user.getFavCockt());
-    Cocktail fav = (new CocktailDao().getCocktailById(user.getFavCockt()));
     System.out.println("fav" + fav.getId());
 %>
 <h1>${user.getName()}</h1>

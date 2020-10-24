@@ -9,6 +9,16 @@
     <title>List</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        function pass_gen(len) {
+            chrs = 'abdehkmnpswxzABDEFGHKMNPQRSTWXZ';
+            var str = '';
+            for (var i = 0; i < len; i++) {
+                var pos = Math.floor(Math.random() * chrs.length);
+                str += chrs.substring(pos,pos+1);
+            }
+            return str;
+        }
+
         $(function () {
             //console.log(2);
             $('#button').click(function (event) {
@@ -17,23 +27,20 @@
                 var tags = [];
                 var i = 0;
                 var select1 = $("#filter_cat option:selected").val();
-                if(select1 === ""){
-                }
-                else{
+                if (select1 === "") {
+                } else {
                     tags[i] = select1;
                     i++;
                 }
                 var select2 = $("#filter_ing option:selected").val();
-                if(select2 === ""){
-                }
-                else{
+                if (select2 === "") {
+                } else {
                     tags[i] = select2;
                     i++;
                 }
                 var select3 = $("#filter_dog option:selected").val();
-                if(select3 === ""){
-                }
-                else{
+                if (select3 === "") {
+                } else {
                     tags[i] = select3;
                     i++;
                 }
@@ -46,11 +53,20 @@
                     },
                     dataType: 'json',
                     success: function (result) {
-                        $("#delete").detach();
-                        $("<div class = \"cocktail__item-inner>\" id=\"delete\"></div>").appendTo($("#vstavka"));
+                        $("#vstavka").detach();
+                        $("<div class=\"cocktails__inner\" id=\"vstavka\">").appendTo($("#v"));
                         for (var i = 0; i < result.length; i++) {
-                            $("<div class= \"cocktail__img\">").html("<img src=\"" + result[i]['img'] +"\" class=\"cocktails__photo\" alt=\"\"/></div>" ).appendTo($("#delete"));
-                            $("<div class=\"cocktails__content\">").html("<h4 class=\"cocktail__name\">" + result[i]['name'] + "</h4>" + "<a  class=\"readmore\" href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">Read more</a>").appendTo($("#delete"));
+                            var st = pass_gen(i+1)
+                            console.log(111);
+                            $("<div class=\"cocktail__item\" id=\"vstavka" + st + "\">").appendTo($("#vstavka"));
+                            console.log(11);
+                            $("<div class=\"cocktail__item-inner\" id=\"delete" + st + "\">").appendTo($("#vstavka" + st));
+                            console.log(1);
+                            console.log(result[i]['smallImg']);
+                            $("<div class=\"cocktail__img\">").html("<img src=\"/BarBookOriginal_war/img?image_path=" + result[i]['smallImg'] + "\" class=\"cocktails__photo\" alt=\"\"/>").appendTo($("#delete" + st));
+                            console.log(0);
+                            $("<div class=\"cocktails__content\">").html("<h4 class=\"cocktail__name\">" + result[i]['name'] + "</h4>" + "<a  class=\"readmore\" href=\"/BarBookOriginal_war/cocktail?id=" + result[i]['id'] + "\">Read more</a>").appendTo($("#delete" +  st));
+                            console.log(-1);
                         }
                     }
                 });
@@ -67,7 +83,7 @@
     <div class="container">
         <div class="search__system">
             <form id="filter" class="filter">
-                <input type="search" id= "search" class="search__field" placeholder="Search...">
+                <input type="search" id="search" class="search__field" placeholder="Search...">
 
                 <select id="filter_cat" class="filter__item">
                     <option value="">Алкоголь</option>
@@ -94,21 +110,26 @@
             </form>
         </div>
 
-        <div class="cocktails__inner">
-            <div class="cocktail__item" id="vstavka">
-                <div class="cocktail__item-inner" id ="delete">
-                    <#list cocktails as cocktail>
-                        <div class="cocktail__img">
-                            <img src="${cocktail.img}" class="cocktails__photo" alt=""/>
+        <div id="v">
+            <div class="cocktails__inner" id="vstavka">
+                <#list cocktails as cocktail>
+                    <div class="cocktail__item" id="delete">
+                        <div class="cocktail__item-inner">
+                            <div class="cocktail__img">
+                                <img src="/BarBookOriginal_war/img?image_path=${cocktail.smallImg}"
+                                     class="cocktails__photo"
+                                     alt=""/>
+                            </div>
+                            <div class="cocktails__content">
+                                <h4 class="cocktail__name">${cocktail.name}</h4>
+                                <a class="readmore" href="/BarBookOriginal_war/cocktail?id=">Read more</a>
+                            </div>
                         </div>
-                        <div class="cocktails__content">
-                            <h4 class="cocktail__name">${cocktail.name}</h4>
-                            <a class="readmore" href="/BarBookOriginal_war/cocktail?id=${cocktail.id}">Read more</a>
-                        </div>
-                    </#list>
-                </div>
+                    </div>
+                </#list>
             </div>
         </div>
+
     </div>
 </div>
 

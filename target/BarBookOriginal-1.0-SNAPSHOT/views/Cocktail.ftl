@@ -65,6 +65,9 @@
                                 </div>
                             </#list>
                         </div>
+                        <div class="recipe__photo">
+                            <img src="/BarBookOriginal_war/img?image_path=${cocktail.smallImg}" alt="" class="recipe__img">
+                        </div>
                     </div>
                 </div>
 

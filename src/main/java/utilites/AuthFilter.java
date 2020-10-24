@@ -46,12 +46,13 @@ public class AuthFilter implements Filter {
                 res.addCookie(cook3);
             }
             session.setAttribute("user",user);
-            servletRequest.getRequestDispatcher("/views/main.jsp").forward(servletRequest, servletResponse);
+            req.setAttribute("user",user);
+            servletRequest.getRequestDispatcher("/views/main.ftl").forward(servletRequest, servletResponse);
         }
         else
         {
             servletRequest.setAttribute("errMessage", "smth went wrong"); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
-            servletRequest.getRequestDispatcher("/views/main.jsp").forward(servletRequest, servletResponse);//forwarding the request
+            servletRequest.getRequestDispatcher("/views/main.ftl").forward(servletRequest, servletResponse);//forwarding the request
         }
     }
 

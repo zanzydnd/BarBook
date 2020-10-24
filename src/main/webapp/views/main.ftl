@@ -1,3 +1,15 @@
+<#macro Hello user_name>
+    <div class="intro__inner1">
+        <h1 class="intro__title1">Hello, ${user_name}</h1>
+    </div>
+    <div class="intro__line-helper">
+        <div class="intro__line"></div>
+    </div>
+    <div class="intro__inner2">
+        <h1 class="intro__title2">It's nice to have you back!</h1>
+    </div>
+</#macro>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +34,7 @@
                 <a class="nav__link" href="/BarBookOriginal_war/contestlist">Contests</a>
                 <a class="nav__link" href="/BarBookOriginal_war/ingridientlist">Ingredients</a>
                 <#if user??>
-                    <a class="nav__link" href="/BarBookOriginal_war/profile">${user.login}</a>
+                    <a class="nav__link" href="/BarBookOriginal_war/profile?id=self">${user.login}</a>
                     <a class="nav__link" href="/BarBookOriginal_war/logout">Log out</a>
                 <#else>
                     <a class="nav__link" href="/BarBookOriginal_war/registration">Registration</a>
@@ -37,15 +49,19 @@
     <div class="intro intro1">
         <div class="container">
             <div class="slider__inner">
-                <div class="intro__inner1">
-                    <h1 class="intro__title1">BarBook</h1>
-                </div>
-                <div class="intro__line-helper">
-                    <div class="intro__line"></div>
-                </div>
-                <div class="intro__inner2">
-                    <h1 class="intro__title2">BEST SERVICE FOR BARTENDERS</h1>
-                </div>
+                <#if user??>
+                    <@Hello user_name=user.name/>
+                <#else>
+                    <div class="intro__inner1">
+                        <h1 class="intro__title1">BarBook</h1>
+                    </div>
+                    <div class="intro__line-helper">
+                        <div class="intro__line"></div>
+                    </div>
+                    <div class="intro__inner2">
+                        <h1 class="intro__title2">BEST SERVICE FOR BARTENDERS</h1>
+                    </div>
+                </#if>
             </div>
         </div>
     </div>

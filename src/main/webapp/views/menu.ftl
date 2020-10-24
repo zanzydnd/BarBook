@@ -11,7 +11,7 @@
                 <a class="nav__link" href="/BarBookOriginal_war/contestlist">Contests</a>
                 <a class="nav__link" href="/BarBookOriginal_war/ingridientlist">Ingredients</a>
                 <#if user??>
-                    <a class="nav__link" href="/BarBookOriginal_war/profile">${user.login}</a>
+                    <a class="nav__link" href="/BarBookOriginal_war/profile?id=self">${user.login}</a>
                     <a class="nav__link" href="/BarBookOriginal_war/logout">Log out</a>
                 <#else>
                     <a class="nav__link" href="/BarBookOriginal_war/registration">Registration</a>

@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CocktailDao {
+
     public List<Cocktail> getCocktails() {
         Connection con;
         Statement statement;
@@ -34,6 +35,7 @@ public class CocktailDao {
                 cocktail.setSmallImg(resultSet.getString("smallImg"));
                 cocktail.setContent_type(resultSet.getString("content_type"));
                 cocktail.setRating(rating);
+                cocktail.setIngridients(this.getRecepie(cocktail));
                 list.add(cocktail);
             }
             return list;
@@ -62,10 +64,10 @@ public class CocktailDao {
                 statement = con.createStatement();
                 Statement statement2 = con2.createStatement();
                 System.out.println(tags[i]);
-                String sql1 = "select id from tags where tag='" + tags[i]+ "'";
+                String sql1 = "select id from tags where tag='" + tags[i] + "'";
                 ResultSet resultSetForTag = statement.executeQuery(sql1);
                 Integer tag_id = 0;
-                while(resultSetForTag.next()){
+                while (resultSetForTag.next()) {
                     tag_id = resultSetForTag.getInt("id");
                 }
                 System.out.println("-");
@@ -86,7 +88,7 @@ public class CocktailDao {
                     first = map.get(curr);
                     s1 = new HashSet<>(first);
                     System.out.println("s1" + s1);
-                } else{
+                } else {
                     second = map.get(curr);
                     System.out.println("second " + second);
                     s1 = new HashSet<>(first);
@@ -97,7 +99,7 @@ public class CocktailDao {
             }
             System.out.println("s1" + s1);
             System.out.println("asdadsas");
-            cocktails =  s1.toArray(new Integer[s1.size()]);
+            cocktails = s1.toArray(new Integer[s1.size()]);
             System.out.println(cocktails[0]);
             for (Integer id : cocktails) {
                 System.out.println("в лист id" + id);
@@ -140,6 +142,7 @@ public class CocktailDao {
                 Cocktail cockt = new Cocktail();
                 cockt.setId(resultSet.getInt("id"));
                 cockt.setName(resultSet.getString("name"));
+                cockt.setIngridients(this.getRecepie(cockt));
                 cockts.add(cockt);
             }
             Pattern pattern = Pattern.compile(name.toLowerCase());
@@ -171,13 +174,13 @@ public class CocktailDao {
             con = DBConnector.createConnection();
             //resultSet = statement.executeQuery("select cocktid,ingid from recipie where cocktid=" + id);
             statement = con.prepareStatement("select cocktid,ingid from recipie where cocktid=?");
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int ingId = resultSet.getInt("ingid");
                 Connection con2 = DBConnector.createConnection();
-                PreparedStatement  statement2 = con2.prepareStatement("select * from ingridient where id=?");
-                statement2.setInt(1,ingId);
+                PreparedStatement statement2 = con2.prepareStatement("select * from ingridient where id=?");
+                statement2.setInt(1, ingId);
                 ResultSet finalSet = statement2.executeQuery();
                 Ingridient ingridient = new Ingridient();
                 while (finalSet.next()) {
@@ -202,7 +205,7 @@ public class CocktailDao {
         try {
             Connection con = DBConnector.createConnection();
             PreparedStatement statement = con.prepareStatement("select * from cocktail where id=?");
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res.setId(id);
@@ -214,6 +217,7 @@ public class CocktailDao {
                 res.setSmallImg(resultSet.getString("smallImg"));
                 res.setContent_type(resultSet.getString("content_type"));
             }
+            res.setIngridients(this.getRecepie(res));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -225,7 +229,7 @@ public class CocktailDao {
         Connection con1 = DBConnector.createConnection();
         PreparedStatement preparedStatement = con1.prepareStatement("select id_user , id_cocktail " +
                 "from cocktails_likes where id_cocktail =?");
-        preparedStatement.setInt(1,cockt_id);
+        preparedStatement.setInt(1, cockt_id);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             if (resultSet.getInt("id_user") == user_id) {
@@ -244,9 +248,9 @@ public class CocktailDao {
                 Cocktail cocktail = this.getCocktailById(cockt_id);
                 int rate = cocktail.getRating() + 1;
                 Connection con2 = DBConnector.createConnection();
-                PreparedStatement ps= con2.prepareStatement("update cocktail set rating=? where id =?");
-                ps.setInt(1,rate);
-                ps.setInt(2,cockt_id);
+                PreparedStatement ps = con2.prepareStatement("update cocktail set rating=? where id =?");
+                ps.setInt(1, rate);
+                ps.setInt(2, cockt_id);
                 cocktail.setRating(rate);
                 ps.executeUpdate();
             } catch (SQLException throwables) {
@@ -257,18 +261,33 @@ public class CocktailDao {
         }
     }
 
-    public void favCockt(Integer cockt_id , Integer user_id){
+    public void favCockt(Integer cockt_id, Integer user_id) throws SQLException {
         Connection con = DBConnector.createConnection();
-        try{
-            String query = "update user set favouriteCocktail_id = ? where id = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,cockt_id);
-            ps.setInt(2,user_id);
-            System.out.println(query);
-            ps.executeUpdate();
+        Connection con1 = DBConnector.createConnection();
+        PreparedStatement preparedStatement1 = con1.prepareStatement("select user_id , cocktail_id " +
+                "from user_favourite_cocktail where cocktail_id =?");
+        preparedStatement1.setInt(1, cockt_id);
+        ResultSet resultSet = preparedStatement1.executeQuery();
+        boolean flag = true;
+        while (resultSet.next()) {
+            if (resultSet.getInt("user_id") == user_id) {
+                flag = false;
+                break;
+            }
         }
-        catch (SQLException e){
-            e.printStackTrace();
+        if (flag) {
+            try {
+                String query = "insert into user_favourite_cocktail set user_id = ? , cocktail_id = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1, user_id);
+                ps.setInt(2, cockt_id);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            throw new SQLException();
         }
     }
 }

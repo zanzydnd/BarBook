@@ -15,6 +15,7 @@ public class ImageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String file_path = request.getParameter("image_path");
+        System.out.println("ya tyt bil");
         response.setContentType("image/jpg");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");

@@ -9,8 +9,6 @@ public class User {
 
     private String img;
 
-    private Integer rating;
-
     private String login;
 
     private String email;
@@ -19,23 +17,19 @@ public class User {
 
     private String password;
 
-    private Integer favCockt;
+    private List<Cocktail> favCocktails;
 
-    private List<Integer> participated;
+    public List<Cocktail> getFavCocktails() {
+        return favCocktails;
+    }
 
-    private List<Integer> wins;
+    public void setFavCocktails(List<Cocktail> favCocktails) {
+        this.favCocktails = favCocktails;
+    }
 
     public void setInformation(String inf){information = inf;}
 
     public String getInformation(){return information;}
-
-    public void addWin(Integer id) {
-        wins.add(id);
-    }
-
-    public void addParticipaitng(Integer id) {
-        participated.add(id);
-    }
 
     public void setImg(String img) {
         this.img = img;
@@ -45,37 +39,6 @@ public class User {
         return img;
     }
 
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(int rate) {
-        rating = rate;
-    }
-
-    public List<Integer> getParticipated() {
-        return participated;
-    }
-
-    public void setParticipated(List<Integer> list) {
-        participated = list;
-    }
-
-    public List<Integer> getWins() {
-        return wins;
-    }
-
-    public void setWins(List<Integer> list) {
-        wins = list;
-    }
-
-    public Integer getFavCockt() {
-        return favCockt;
-    }
-
-    public void setFavCockt(int id) {
-        favCockt = id;
-    }
 
     public String getName() {
         return name;

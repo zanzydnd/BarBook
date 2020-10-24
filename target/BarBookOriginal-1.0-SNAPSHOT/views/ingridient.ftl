@@ -21,7 +21,7 @@
             </div>
 
             <div class="single-bg">
-                <img src="/BarBookOriginal_war/img?image_path=${ingridient.img}">
+                <img src="/BarBookOriginal_war/img?image_path=${ingridient.img}" class="single_image">
             </div>
 
             <div class="single__about">

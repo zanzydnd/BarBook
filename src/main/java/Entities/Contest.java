@@ -13,6 +13,15 @@ public class Contest {
     private String info;
     private Integer day;
     private String month;
+    private String html_id;
+
+    public String getHtml_id() {
+        return html_id;
+    }
+
+    public void setHtml_id(String html_id) {
+        this.html_id = html_id;
+    }
 
     public Integer getDay() {
         return day;
