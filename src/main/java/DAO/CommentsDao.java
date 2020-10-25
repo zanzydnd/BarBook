@@ -23,7 +23,7 @@ public class CommentsDao {
             preparedStatement.setString(2,comment.getComm());
             preparedStatement.setInt(3,comment.getCocktail().getId());
             int i= preparedStatement.executeUpdate();
-
+            connector.close();
             if (i!=0){
                 return "SUCCESS";
             }
@@ -54,6 +54,7 @@ public class CommentsDao {
                 comment.setId(resultSet.getInt("id"));
                 list.add(comment);
             }
+                connector.close();
                 return list;
         }
         catch (SQLException e){

@@ -32,18 +32,17 @@ public class RegisterDao {
                 if (s.equals(login))
                     throw new SQLException();
             }
-            String query = "insert into user(login,name,password,email,img," +
-                    "information) values (?,?,?,?,?,?)"; //Insert user details into the table 'USERS'
+            String query = "insert into user(login,name,password,email," +
+                    "information) values (?,?,?,?,?)"; //Insert user details into the table 'USERS'
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements here to insert bunch of data
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, email);
-            preparedStatement.setString(5,img);
-            preparedStatement.setString(6,information);
+            preparedStatement.setString(5,information);
 
             int i= preparedStatement.executeUpdate();
-
+            con.close();
             if (i!=0)  //Just to ensure data has been inserted into the database
                 return "SUCCESS";
         }

@@ -1,6 +1,7 @@
 package Servlets;
 
 import DAO.CocktailDao;
+import DAO.UserDao;
 import Entities.Cocktail;
 import Entities.User;
 
@@ -19,7 +20,9 @@ public class CocktailListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CocktailDao c = new CocktailDao();
         List<Cocktail> list = c.getCocktails();
-        request.setAttribute("user",(User)request.getSession().getAttribute("user"));
+        if(request.getSession().getAttribute("user") != null){
+            request.setAttribute("user", new UserDao().getUserById(((User)request.getSession().getAttribute("user")).getId()));
+        }
         request.setAttribute("cocktails" , list);
         request.getRequestDispatcher("/views/cocktailList.ftl").forward(request,response);
     }

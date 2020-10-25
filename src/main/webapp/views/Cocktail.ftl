@@ -20,18 +20,19 @@
             <div class="coctail__header">
                 <div class="coctail__name">${cocktail.name}</div>
                 <#if user??>
-                <div class="statistika">
-                    <form class="stat__like" action="/BarBookOriginal_war/cocktail?id=${cocktail.id}" method="post">
-                        <button type="submit" name="likedCocktId" value="${cocktail.id}">Мне нравится ${cocktail.rating}</button>
-                    </form>
+                    <div class="statistika">
+                        <form class="stat__like" action="/BarBookOriginal_war/cocktail?id=${cocktail.id}" method="post">
+                            <button type="submit" name="likedCocktId" value="${cocktail.id}">Мне
+                                нравится ${cocktail.rating}</button>
+                        </form>
                         <#if errMsg??>
                             <br>
                             <a>Вы уже оставляли лайк</a>
                         </#if>
-                    <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
-                        <button type="submit" name= "favcocktid" value="${cocktail.id}">Мой любимый коктейль</button>
-                    </form>
-                </div>
+                        <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
+                            <button type="submit" name="favcocktid" value="${cocktail.id}">Мой любимый коктейль</button>
+                        </form>
+                    </div>
                 <#else>
                     <br>
                     <a href="/BarBookOriginal_war/auth" class="stat__like">Чтобы оставить лайк авторизируйтесь.</a>
@@ -49,7 +50,8 @@
                 <div class="coctail__block-photo">
                     <#list ingridients as ingridient>
                         <a href="/BarBookOriginal_war/ingridient?id=${ingridient.id}" class="cocktail-ingredPhoto">
-                            <img src="/BarBookOriginal_war/img?image_path=${ingridient.smallImg}" alt="" class="coctail__block-img">
+                            <img src="/BarBookOriginal_war/img?image_path=${ingridient.smallImg}" alt=""
+                                 class="coctail__block-img">
                         </a>
                     </#list>
                 </div>
@@ -66,7 +68,8 @@
                             </#list>
                         </div>
                         <div class="recipe__photo">
-                            <img src="/BarBookOriginal_war/img?image_path=${cocktail.smallImg}" alt="" class="recipe__img">
+                            <img src="/BarBookOriginal_war/img?image_path=${cocktail.smallImg}" alt=""
+                                 class="recipe__img">
                         </div>
                     </div>
                 </div>
@@ -105,11 +108,21 @@
                             <#list comments as comment>
                                 <div class="comments__list-item">
                                     <div class="comments__avatar">
-                                        <img src="${comment.user.img}" alt="" class="comments__avatar-img">
+                                        <img src="/BarBookOriginal_war/img?image_path=${comment.user.img}" alt="" class="comments__avatar-img">
                                     </div>
                                     <div class="comments__info">
                                         <div class="comment__head">
-                                            <div class="comments__name">${comment.user.name}</div>
+                                            <div class="comments__name">
+                                                <#if user??>
+                                                    <#if comment.user.id != user.id>
+                                                        <a href="/BarBookOriginal_war/profile?id=${comment.user.id}">${comment.user.name}</a>
+                                                    <#else>
+                                                        <a href="/BarBookOriginal_war/profile?id=self">${comment.user.name}</a>
+                                                    </#if>
+                                                <#else>
+                                                    <a href="/BarBookOriginal_war/profile?id=${comment.user.id}">${comment.user.name}</a>
+                                                </#if>
+                                            </div>
                                         </div>
                                         <div class="comments__text">
                                             ${comment.comm}

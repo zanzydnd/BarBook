@@ -13,7 +13,7 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/registration.jsp");
+        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/registration.ftl");
         rqDispatcher.forward(request,response);
     }
 }

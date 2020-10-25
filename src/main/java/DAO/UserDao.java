@@ -27,7 +27,7 @@ public class UserDao {
                 res.setImg(resultSet.getString("img"));
             }
             Connection connection = DBConnector.createConnection();
-            PreparedStatement statement = con.prepareStatement("select * from user_favourite_cocktail where user_id = ?");
+            PreparedStatement statement = connection.prepareStatement("select * from user_favourite_cocktail where user_id = ?");
             statement.setInt(1,id);
             ResultSet resultSet1 = statement.executeQuery();
             List<Cocktail> list = new ArrayList<>();
@@ -36,6 +36,8 @@ public class UserDao {
                 list.add(cocktail);
             }
             res.setFavCocktails(list);
+            con.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,16 +56,41 @@ public class UserDao {
                 ps.setString(2,name);
                 ps.setString(3,pathFile);
                 ps.executeUpdate();
+                con.close();
             } else {
                 String query = "update user set  information = ? , name = ? where id=" + id;
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setString(1,info);
                 ps.setString(2,name);
                 ps.executeUpdate();
+                con.close();
             }
         }
         catch (SQLException e){
             e.printStackTrace();
+        }
+    }
+
+    public List<User> getAllUsers(){
+        Connection con;
+        Statement statement;
+        ResultSet resultSet;
+        Integer idDB;
+        List<User> list = new ArrayList<>();
+        try {
+            con = DBConnector.createConnection();
+            statement = con.createStatement();
+            resultSet = statement.executeQuery("select id from user");
+            while (resultSet.next()) {
+                User user = new User();
+                user = this.getUserById(resultSet.getInt("id"));
+                list.add(user);
+            }
+            con.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return list;
         }
     }
 }

@@ -38,6 +38,7 @@ public class CocktailDao {
                 cocktail.setIngridients(this.getRecepie(cocktail));
                 list.add(cocktail);
             }
+            con.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,6 +97,8 @@ public class CocktailDao {
                     s1.retainAll(s2);
                     System.out.println(s1);
                 }
+                con2.close();
+                con.close();
             }
             System.out.println("s1" + s1);
             System.out.println("asdadsas");
@@ -154,6 +157,7 @@ public class CocktailDao {
                     System.out.println(c.getId());
                 }
             }
+            con.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -193,6 +197,7 @@ public class CocktailDao {
                     list.add(ingridient);
                 }
             }
+            con.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +223,7 @@ public class CocktailDao {
                 res.setContent_type(resultSet.getString("content_type"));
             }
             res.setIngridients(this.getRecepie(res));
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -237,7 +243,7 @@ public class CocktailDao {
                 break;
             }
         }
-
+        con1.close();
         if (flag) {
             try {
                 Connection con = DBConnector.createConnection();
@@ -253,6 +259,7 @@ public class CocktailDao {
                 ps.setInt(2, cockt_id);
                 cocktail.setRating(rate);
                 ps.executeUpdate();
+                con.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -275,6 +282,7 @@ public class CocktailDao {
                 break;
             }
         }
+        con1.close();
         if (flag) {
             try {
                 String query = "insert into user_favourite_cocktail set user_id = ? , cocktail_id = ?";
@@ -282,6 +290,7 @@ public class CocktailDao {
                 ps.setInt(1, user_id);
                 ps.setInt(2, cockt_id);
                 ps.executeUpdate();
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

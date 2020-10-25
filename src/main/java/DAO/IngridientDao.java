@@ -36,6 +36,7 @@ public class IngridientDao {
                         list.add(cocktail);
                     }
             }
+            con.close();
             return list;
         }
         catch (SQLException e){
@@ -67,6 +68,7 @@ public class IngridientDao {
                 ingridient.setContent_type(resultSet.getString("content_type"));
                 list.add(ingridient);
             }
+            con.close();
             return list;
         }
         catch (SQLException e){
@@ -90,6 +92,7 @@ public class IngridientDao {
                 res.setSmallImg(resultSet.getString("smallImg"));
                 res.setContent_type(resultSet.getString("content_type"));
             }
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

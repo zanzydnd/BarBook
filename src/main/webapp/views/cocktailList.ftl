@@ -122,7 +122,7 @@
                             </div>
                             <div class="cocktails__content">
                                 <h4 class="cocktail__name">${cocktail.name}</h4>
-                                <a class="readmore" href="/BarBookOriginal_war/cocktail?id=">Read more</a>
+                                <a class="readmore" href="/BarBookOriginal_war/cocktail?id=${cocktail.id}">Read more</a>
                             </div>
                         </div>
                     </div>

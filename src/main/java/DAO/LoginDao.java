@@ -40,9 +40,11 @@ public class LoginDao {
                     res.setPassword(resultSet.getString("password"));
                     res.setEmail(resultSet.getString("email"));
                     res.setLogin(resultSet.getString("login"));
+                    con.close();
                     return res; ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                 }
-            }// Return appropriate message in case of failure
+            }
+            con.close();
         }
         catch(SQLException e)
         {

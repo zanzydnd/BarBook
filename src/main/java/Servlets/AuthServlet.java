@@ -29,7 +29,7 @@ public class AuthServlet extends HttpServlet {
         if (loginm.matches() && passwordm.matches()) {
             String userRegister = regDao.registerUser(user);
             if (userRegister.equals("SUCCESS")) {
-                RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/authorizing.jsp");
+                RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/authorizing.ftl");
                 rqDispatcher.forward(request, response);
             } else {
                 RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/main.ftl");

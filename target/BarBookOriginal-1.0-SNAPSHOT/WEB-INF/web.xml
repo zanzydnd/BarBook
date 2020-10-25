@@ -140,20 +140,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>AutoCompleteServlet</servlet-name>
-        <servlet-class>Servlets.AutoCompleteServlet</servlet-class>
-        <init-param>
-            <param-name>uploadDir</param-name>
-            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>AutoCompleteServlet</servlet-name>
-        <url-pattern>/autocomplete</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
         <servlet-name>CocktailServlet</servlet-name>
         <servlet-class>Servlets.CocktailServlet</servlet-class>
         <init-param>
@@ -273,5 +259,15 @@
     <servlet-mapping>
         <servlet-name>ImageServlet</servlet-name>
         <url-pattern>/img</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>BarmenListServlet</servlet-name>
+        <servlet-class>Servlets.BarmenListServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>BarmenListServlet</servlet-name>
+        <url-pattern>/barmen</url-pattern>
     </servlet-mapping>
 </web-app>

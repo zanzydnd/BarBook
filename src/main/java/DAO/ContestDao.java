@@ -37,6 +37,7 @@ public class ContestDao {
                     list.add(contest);
                 }
             }
+            con.close();
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
