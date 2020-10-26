@@ -1235,6 +1235,7 @@ SELECT|sys.sys_config:null
     <column id="359" parent="294" name="img">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
       <DefaultExpression>&apos;C:/Users/Даня/IdeaProjects/BarBook/BarBook/src/main/webapp/views/img/user/default.jpg&apos;</DefaultExpression>
     </column>
     <column id="360" parent="294" name="information">

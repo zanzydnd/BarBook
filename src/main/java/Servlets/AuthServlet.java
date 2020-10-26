@@ -41,7 +41,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/authorizing.jsp");
+        RequestDispatcher rqDispatcher = request.getRequestDispatcher("views/authorizing.ftl");
         rqDispatcher.forward(request, response);
     }
 }

@@ -13,7 +13,11 @@ import java.util.List;
 
 public class IngridientListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        IngridientDao dao = new IngridientDao();
+        request.setCharacterEncoding("UTF-8");
+        request.setAttribute("ingridients",dao.findIngridients(request.getParameter("ina")));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/ingridients.ftl" );
+        requestDispatcher.forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

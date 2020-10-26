@@ -14,9 +14,9 @@
 <div class="coctail__info">
     <div class="container">
         <div class="coctail__inner ingred__inner">
-            <form id="search" class="filter">
-                <input type="search" id="search" class="search__field" placeholder="Search...">
-                <button type="submit" id="button">Поиск</button>
+            <form id="search" class="filter" action="/BarBookOriginal_war/ingridientlist" method="post">
+                <input type="search" id="search" class="search__field" name="ina" placeholder="Search...">
+                <button id="button" class="filter__btn search__btn" type="submit">Поиск</button>
             </form>
             <div class="ingred__item">
                 <div class="ingred__block-photo">

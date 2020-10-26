@@ -7,6 +7,8 @@ import utilites.DBConnector;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IngridientDao {
     public List<Cocktail> getCoctailsByIngridient(Ingridient ingridient){
@@ -97,5 +99,41 @@ public class IngridientDao {
             e.printStackTrace();
         }
         return res;
+    }
+
+    public List<Ingridient> findIngridients(String search){
+        Connection con;
+        Statement statement;
+        ResultSet resultSet;
+        List<Ingridient> list = new ArrayList<>();
+        try {
+            con = DBConnector.createConnection();
+            statement = con.createStatement();
+            resultSet = statement.executeQuery("select * from ingridient");
+            List<Ingridient> ings = new ArrayList<>();
+            while (resultSet.next()) {
+                Ingridient ingridient = new Ingridient();
+                ingridient.setId(resultSet.getInt("id"));
+                ingridient.setName(resultSet.getString("name"));
+                ingridient.setSmallImg(resultSet.getString("smallImg"));
+                ingridient.setImg(resultSet.getString("img"));
+                ingridient.setContent_type(resultSet.getString("content_type"));
+                ingridient.setInf(resultSet.getString("information"));
+                ings.add(ingridient);
+            }
+            System.out.println(search);
+            Pattern pattern = Pattern.compile(search.toLowerCase());
+            for (Ingridient c : ings) {
+                Matcher matcher = pattern.matcher(c.getName().toLowerCase());
+                if (matcher.find()) {
+                    list.add(c);
+                }
+            }
+            con.close();
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

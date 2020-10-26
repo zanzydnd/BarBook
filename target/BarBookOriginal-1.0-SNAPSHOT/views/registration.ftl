@@ -11,7 +11,7 @@
 
 <body>
 <div class="login">
-    <h1 class="h1_l">Авторизация на сайте</h1>
+    <h3 class="h1_l">Регистрация на сайте</h3>
     <div class="inp">
         <form action="/BarBookOriginal_war/auth" method="post">
             <input class="log" type="text"  placeholder="login" name="login">
