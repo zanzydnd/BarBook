@@ -21,6 +21,7 @@
         <div class="coctail__inner">
             <div class="coctail__header">
                 <div class="coctail__name">${user_profile.name}</div>
+                <a href="/BarBookOriginal_war/createCocktail"><button type="submit" name="likedCocktId" value="${user_profile.id}">Создать свой коктейль</button></a>
             </div>
 
             <div class="single-bg">

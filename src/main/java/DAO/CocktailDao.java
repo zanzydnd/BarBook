@@ -521,4 +521,48 @@ public class CocktailDao {
         }
         return id;
     }
+
+    public void upgrade(Integer id,String newName,String newText,String img,String smallImg) throws SQLException {
+        Connection con = DBConnector.createConnection();
+        PreparedStatement ps = null;
+        try{
+            if(img.equals("") && smallImg.equals("")){
+                ps = con.prepareStatement("update cocktail set name= ? ,information = ? where id=?");
+                ps.setString(1,newName);
+                ps.setString(2,newText);
+                ps.setInt(3,id);
+                ps.executeUpdate();
+            }
+            else if(!img.equals("") && smallImg.equals("")){
+                ps = con.prepareStatement("update cocktail set name= ? ,information = ?, img=? where id=?");
+                ps.setString(1,newName);
+                ps.setString(2,newText);
+                ps.setString(3,img);
+                ps.setInt(4,id);
+                ps.executeUpdate();
+            }
+            else if(img.equals("") && !smallImg.equals("")){
+                ps = con.prepareStatement("update cocktail set name= ? ,information = ?, smallImg=? where id=?");
+                ps.setString(1,newName);
+                ps.setString(2,newText);
+                ps.setString(3,smallImg);
+                ps.setInt(4,id);
+                ps.executeUpdate();
+            }
+            else{
+                ps = con.prepareStatement("update cocktail set name= ? ,information = ?, img=?,smallImg=? where id=?");
+                ps.setString(1,newName);
+                ps.setString(2,newText);
+                ps.setString(3,img);
+                ps.setString(4,smallImg);
+                ps.setInt(5,id);
+                ps.executeUpdate();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            ps.close();
+            con.close();
+        }
+    }
 }

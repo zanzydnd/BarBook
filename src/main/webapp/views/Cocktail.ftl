@@ -36,11 +36,13 @@
                             <#if !user??>
                                 <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
                             <#elseif cocktail.author_id == user.id>
-                                <form class="stat__like" method="post" action="/BarBookOriginal_war/redactCocktail">
-                                    <button type="submit" name="favcocktid" value="${cocktail.id}">Редактировать
+                                <div class="stat__like">
+                                    <a href="/BarBookOriginal_war/redactCocktail?id=${cocktail.id}">
+                                    <button type="submit">Редактировать
                                         коктейль
                                     </button>
-                                </form>
+                                    </a>
+                                </div>
                             <#else>
                                 <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
                             </#if>

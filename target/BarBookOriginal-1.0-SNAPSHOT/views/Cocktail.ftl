@@ -32,6 +32,21 @@
                         <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
                             <button type="submit" name="favcocktid" value="${cocktail.id}">Мой любимый коктейль</button>
                         </form>
+                        <#if cocktail.author_id != 12>
+                            <#if !user??>
+                                <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
+                            <#elseif cocktail.author_id == user.id>
+                                <div class="stat__like">
+                                    <a href="/BarBookOriginal_war/redactCocktail?id=${cocktail.id}">
+                                    <button type="submit">Редактировать
+                                        коктейль
+                                    </button>
+                                    </a>
+                                </div>
+                            <#else>
+                                <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
+                            </#if>
+                        </#if>
                     </div>
                 <#else>
                     <br>
@@ -108,7 +123,8 @@
                             <#list comments as comment>
                                 <div class="comments__list-item">
                                     <div class="comments__avatar">
-                                        <img src="/BarBookOriginal_war/img?image_path=${comment.user.img}" alt="" class="comments__avatar-img">
+                                        <img src="/BarBookOriginal_war/img?image_path=${comment.user.img}" alt=""
+                                             class="comments__avatar-img">
                                     </div>
                                     <div class="comments__info">
                                         <div class="comment__head">

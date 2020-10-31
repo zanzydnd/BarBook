@@ -222,7 +222,23 @@
         <servlet-name>CreateCocktailServlet</servlet-name>
         <url-pattern>/createCocktail</url-pattern>
     </servlet-mapping>
-    
+
+
+    <servlet>
+        <servlet-name>RedactCocktailServlet</servlet-name>
+        <servlet-class>Servlets.RedactCocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RedactCocktailServlet</servlet-name>
+        <url-pattern>/redactCocktail</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>FavCocktServlet</servlet-name>
         <servlet-class>Servlets.FavCocktServlet</servlet-class>
