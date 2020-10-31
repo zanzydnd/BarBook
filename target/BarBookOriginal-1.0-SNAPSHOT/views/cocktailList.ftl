@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" href="style.css">
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
     <title>List</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -84,28 +83,7 @@
         <div class="search__system">
             <form id="filter" class="filter">
                 <input type="search" id="search" class="search__field" placeholder="Search...">
-
-                <select id="filter_cat" class="filter__item">
-                    <option value="">Алкоголь</option>
-                    <option name="types[]" value="виски">Виски</option>
-                    <option name="types[]" value="ром">Ром</option>
-                    <option name="types[]" value="водка">Водка</option>
-                    <option name="types[]" value="джин">Джин</option>
-                </select>
-
-                <select id="filter_ing" class="filter__item">
-                    <option value="">Вкус</option>
-                    <option name="types[]" value="сладкий">Сладкий</option>
-                    <option name="types[]" value="свежий">Свежий</option>
-                    <option name="types[]" value="терпкий">Терпкий</option>
-                </select>
-
-                <select id="filter_dog" class="filter__item">
-                    <option value="">Градус</option>
-                    <option name="types[]" value="Безалкогольные">Безалкогольные</option>
-                    <option name="types[]" value="Крепкие">Крепкие</option>
-                    <option name="types[]" value="Слабоалкогольные">Слабоалкогольные</option>
-                </select>
+                <#include "filters.ftl">
                 <button id="button" class="filter__btn search__btn" type="button">Поиск</button>
             </form>
         </div>

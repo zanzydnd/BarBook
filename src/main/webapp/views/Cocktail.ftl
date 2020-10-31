@@ -6,8 +6,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
           rel="stylesheet">
+    <link rel="stylesheet" href="views/style.css">
     <title>Cocktail Info</title>
-    <style><#include "style.css"></style>
 </head>
 
 <body>
@@ -32,6 +32,19 @@
                         <form class="stat__like" method="post" action="/BarBookOriginal_war/favcockt">
                             <button type="submit" name="favcocktid" value="${cocktail.id}">Мой любимый коктейль</button>
                         </form>
+                        <#if cocktail.author_id != 12>
+                            <#if !user??>
+                                <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
+                            <#elseif cocktail.author_id == user.id>
+                                <form class="stat__like" method="post" action="/BarBookOriginal_war/redactCocktail">
+                                    <button type="submit" name="favcocktid" value="${cocktail.id}">Редактировать
+                                        коктейль
+                                    </button>
+                                </form>
+                            <#else>
+                                <a href="/BarBookOriginal_war/profile?id=${cocktail.author_id}">Автор</a>
+                            </#if>
+                        </#if>
                     </div>
                 <#else>
                     <br>
@@ -92,7 +105,7 @@
                         <#if user??>
                             <form action="/BarBookOriginal_war/CommentServlet" method="post" class="send__comment">
                                 <textarea class="text__comment" name="comment" id="text" rows="5"
-                                          placeholder="Оставьте ваш комментарий"></textarea>
+                                          placeholder="Оставьте ваш комментарий" required></textarea>
                                 <input type="hidden" name="cocktail_id" value="${cocktail.id}">
                                 <input type="hidden" name="user_id" value="${user.id}">
                                 <div class="btn-comm">
@@ -108,7 +121,8 @@
                             <#list comments as comment>
                                 <div class="comments__list-item">
                                     <div class="comments__avatar">
-                                        <img src="/BarBookOriginal_war/img?image_path=${comment.user.img}" alt="" class="comments__avatar-img">
+                                        <img src="/BarBookOriginal_war/img?image_path=${comment.user.img}" alt=""
+                                             class="comments__avatar-img">
                                     </div>
                                     <div class="comments__info">
                                         <div class="comment__head">

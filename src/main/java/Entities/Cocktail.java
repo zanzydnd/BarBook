@@ -12,6 +12,15 @@ public class Cocktail {
     private String smallImg;
     private List<Ingridient> ingridients;
     private String content_type;
+    private Integer author_id;
+
+    public Integer getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(Integer author_id) {
+        this.author_id = author_id;
+    }
 
     public String getContent_type() {
         return content_type;

@@ -1,9 +1,9 @@
-<#macro Cockt_list cocktail_list>
+<#macro Cockt_list cocktail_list string>
     <div class="coctail__info">
         <div class="container">
             <div class="coctail__inner">
                 <div class="coctail__header single__header">
-                    <span class="coctail__name single__name">Коктейли</span>
+                    <span class="coctail__name single__name">${string}</span>
                 </div>
                 <div class="single__inner-items">
                     <#list cocktail_list as cocktail>

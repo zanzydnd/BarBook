@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ContestListServlet extends HttpServlet {
@@ -18,9 +19,18 @@ public class ContestListServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Contest> list = ContestDao.getAllContest();
+        List<Contest> list = null;
+        try {
+            list = ContestDao.getAllContest();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         if (request.getSession().getAttribute("user") != null){
-            request.setAttribute("user",new UserDao().getUserById(((User)request.getSession().getAttribute("user")).getId()));
+            try {
+                request.setAttribute("user",new UserDao().getUserById(((User)request.getSession().getAttribute("user")).getId()));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         request.setAttribute("contests",list);
         request.getRequestDispatcher("/views/contestlist.ftl").forward(request,response);

@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="views/style.css">
     <title>Registration</title>
-    <style>
-        <#include "style.css">
-    </style>
+
 </head>
 
 <body>
@@ -20,6 +18,9 @@
             <input class="log" type="text" placeholder="information" name="information">
             <input class="pass" type="password" placeholder="password" name="pass">
             <input class="btn" type="submit" value="Зарегистрироваться">
+            <#if errMsg??>
+                <a>${errMsg}</a>
+            </#if>
         </form>
     </div>
 </div>

@@ -2,11 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="views/style.css">
     <title>Login</title>
-    <style>
-        <#include "style.css">
-    </style>
 </head>
 
 <body>
@@ -20,6 +17,9 @@
             <input type = "checkbox" id = "cookie" name="cookie" value = "yes">
             <input class="btn"  type="submit" value="ВОЙТИ">
         </form>
+        <#if errMsg??>
+            <a>${errMsg}</a>
+        </#if>
     </div>
 </div>
 

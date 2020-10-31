@@ -17,7 +17,7 @@
             crossorigin="anonymous"></script>
     <script><#include "app.js"></script>
     <title>Cocktail Info</title>
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
 
 </head>
 

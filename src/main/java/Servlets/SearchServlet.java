@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        List<Cocktail> list;
+        List<Cocktail> list = null;
         CocktailDao dao = new CocktailDao();
         System.out.println("search " + req.getParameter("search"));
         System.out.println("tags " + req.getParameter("tags"));
@@ -41,15 +42,27 @@ public class SearchServlet extends HttpServlet {
             }
             if(!name.equals("")){
                 System.out.println("фильтр + строка");
-                list = dao.getCocktailsByTagsAndName(name, tags);
+                try {
+                    list = dao.getCocktailsByTagsAndName(name, tags);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
             else{
                 System.out.println("фильтр");
-                list = dao.getCocktailsByTags(tags);
+                try {
+                    list = dao.getCocktailsByTags(tags);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         } else {
             System.out.println("строка");
-            list = dao.getCocktailsIdByName(name);
+            try {
+                list = dao.getCocktailsIdByName(name);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         resp.setContentType("application/json");
         String json = new Gson().toJson(list);

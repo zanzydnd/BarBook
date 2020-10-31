@@ -7,8 +7,7 @@ import utilites.Hashing;
 import java.sql.*;
 
 public class RegisterDao {
-    public String registerUser(User user)
-    {
+    public String registerUser(User user) throws SQLException {
         String name = user.getName();
         String email = user.getEmail();
         String login = user.getLogin();
@@ -42,12 +41,16 @@ public class RegisterDao {
             preparedStatement.setString(5,information);
 
             int i= preparedStatement.executeUpdate();
+            resultSet.close();
+            preparedStatement.close();
             con.close();
             if (i!=0)  //Just to ensure data has been inserted into the database
                 return "SUCCESS";
         }
         catch(SQLException e)
         {
+            preparedStatement.close();
+            con.close();
             e.printStackTrace();
         }
         System.out.println("Oops.. Something went wrong there..!");

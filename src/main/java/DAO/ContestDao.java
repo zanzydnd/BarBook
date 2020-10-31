@@ -13,10 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 public class ContestDao {
-    public static List<Contest> getAllContest() {
-        Connection con;
-        Statement statement;
-        ResultSet resultSet;
+    public static List<Contest> getAllContest() throws SQLException {
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         List<Contest> list = new ArrayList<>();
         try {
             con = DBConnector.createConnection();
@@ -24,7 +24,7 @@ public class ContestDao {
             resultSet = statement.executeQuery("select * from contests");
             while (resultSet.next()) {
                 Contest contest = new Contest();
-                if(resultSet.getString("statment").equals("active")) {
+                if (resultSet.getString("statment").equals("active")) {
                     contest.setStatement(resultSet.getString("statment"));
                     contest.setHref(resultSet.getString("href"));
                     contest.setName(resultSet.getString("name"));
@@ -37,9 +37,17 @@ public class ContestDao {
                     list.add(contest);
                 }
             }
+            resultSet.close();
+            statement.close();
             con.close();
             return list;
         } catch (SQLException e) {
+            if (resultSet != null)
+                resultSet.close();
+            if (statement != null)
+                statement.close();
+            if (con != null)
+                con.close();
             e.printStackTrace();
         }
         return list;

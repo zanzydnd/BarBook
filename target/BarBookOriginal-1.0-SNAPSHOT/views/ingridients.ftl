@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
           rel="stylesheet">
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
     <title>Cocktail Info</title>
 </head>
 

@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Tinos&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
     <title>BarBook</title>
 </head>
 <body>

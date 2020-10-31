@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +36,11 @@ public class HomeServlet extends HttpServlet {
             user.setId(id);
             user.setPassword(pass);
             user.setLogin(login);
-            user = ld.authenticateUser(user);
+            try {
+                user = ld.authenticateUser(user);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             request.getSession().setAttribute("user",user);
             request.setAttribute("user",user);
         }

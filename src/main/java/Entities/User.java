@@ -19,6 +19,16 @@ public class User {
 
     private List<Cocktail> favCocktails;
 
+    private List<Cocktail> createdCocktails;
+
+    public List<Cocktail> getCreatedCocktails() {
+        return createdCocktails;
+    }
+
+    public void setCreatedCocktails(List<Cocktail> createdCocktails) {
+        this.createdCocktails = createdCocktails;
+    }
+
     public List<Cocktail> getFavCocktails() {
         return favCocktails;
     }

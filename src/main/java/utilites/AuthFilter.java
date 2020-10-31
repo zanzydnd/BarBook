@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AuthFilter implements Filter {
     @Override
@@ -24,13 +25,17 @@ public class AuthFilter implements Filter {
 
         final String login = req.getParameter("login");
         final String password = req.getParameter("pass");
-
+        if (login != null && password != null) {
         UserDao dao = new UserDao();
         User user = new User();
         user.setLogin(login);
         user.setPassword(Hashing.md5Custom(password));
         LoginDao ld = new LoginDao();
-        user = ld.authenticateUser(user);
+        try {
+            user = ld.authenticateUser(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         final HttpSession session = req.getSession();
         if(user != null) //If function returns success string then user will be rooted to Home page
         {
@@ -52,7 +57,11 @@ public class AuthFilter implements Filter {
         else
         {
             servletRequest.setAttribute("errMessage", "smth went wrong"); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
-            servletRequest.getRequestDispatcher("/views/main.ftl").forward(servletRequest, servletResponse);//forwarding the request
+            servletRequest.getRequestDispatcher("/views/authorizing.ftl").forward(servletRequest, servletResponse);//forwarding the request
+        }
+        }
+        else{
+            res.sendRedirect(req.getContextPath() + "/");
         }
     }
 

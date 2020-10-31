@@ -35,10 +35,27 @@ public class CocktailServlet extends HttpServlet {
         catch (SQLException e){
             request.setAttribute("errMsg","Вы уже оставляли лайк");
             request.setAttribute("user",(User)request.getSession().getAttribute("user"));
-            request.setAttribute("cocktail",dao.getCocktailById(Integer.parseInt(request.getParameter("id"))));
-            request.setAttribute("ingridients",dao.getRecepie(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
-            request.setAttribute("comments",new CommentsDao().getComments(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
-            String[] str = dao.getCocktailById(Integer.parseInt(request.getParameter("id"))).getRecipie().split(";");
+            try {
+                request.setAttribute("cocktail",dao.getCocktailById(Integer.parseInt(request.getParameter("id"))));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                request.setAttribute("ingridients",dao.getRecepie(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            try {
+                request.setAttribute("comments",new CommentsDao().getComments(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            String[] str = new String[0];
+            try {
+                str = dao.getCocktailById(Integer.parseInt(request.getParameter("id"))).getRecipie().split(";");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             List<String> list = Arrays.asList(str);
             request.setAttribute("str",list);
             request.getRequestDispatcher("/views/Cocktail.ftl").forward(request,response);
@@ -48,10 +65,27 @@ public class CocktailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CocktailDao dao = new CocktailDao();
         request.setAttribute("user",(User)request.getSession().getAttribute("user"));
-        request.setAttribute("cocktail",dao.getCocktailById(Integer.parseInt(request.getParameter("id"))));
-        request.setAttribute("ingridients",dao.getRecepie(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
-        request.setAttribute("comments",new CommentsDao().getComments(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
-        String[] str = dao.getCocktailById(Integer.parseInt(request.getParameter("id"))).getRecipie().split(";");
+        try {
+            request.setAttribute("cocktail",dao.getCocktailById(Integer.parseInt(request.getParameter("id"))));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            request.setAttribute("ingridients",dao.getRecepie(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            request.setAttribute("comments",new CommentsDao().getComments(dao.getCocktailById(Integer.parseInt(request.getParameter("id")))));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String[] str = new String[0];
+        try {
+            str = dao.getCocktailById(Integer.parseInt(request.getParameter("id"))).getRecipie().split(";");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         List<String> list = Arrays.asList(str);
         request.setAttribute("str",list);
         request.getRequestDispatcher("/views/Cocktail.ftl").forward(request,response);

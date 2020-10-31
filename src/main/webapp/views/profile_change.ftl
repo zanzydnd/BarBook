@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
           rel="stylesheet">
     <title>Cocktail Info</title>
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
 </head>
 
 <body>
@@ -29,13 +29,13 @@
                 <div class="cabinet__name-surname">
                     <div class="cabinet__name">
                         <label for="name" class="cabinet__name-label">Name</label>
-                        <input type="text" name= "name" id="name" class="cabinet__name-field" value="${user.name}">
+                        <input type="text" required name= "name" id="name" class="cabinet__name-field" value="${user.name}">
                     </div>
                 </div>
 
                 <div class="cabinet__info">
                     <label for="text" class="cabinet__text-label">Info</label>
-                    <textarea name="text" name="text" id="text" class="cabinet__text" rows="10"></textarea>
+                    <textarea name="text" name="text" required id="text" class="cabinet__text" rows="10">${user.information}</textarea>
                 </div>
 
                 <div class="cabinet__btn">
@@ -43,6 +43,9 @@
                 </div>
             </div>
         </form>
+        <#if errMsg??>
+            <p>${errMsg}</p>
+        </#if>
     </div>
 </div>
 </body>

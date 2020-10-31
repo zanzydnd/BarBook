@@ -208,6 +208,20 @@
         <servlet-name>ChangeProfileServlet</servlet-name>
         <url-pattern>/change_profile</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateCocktailServlet</servlet-name>
+        <servlet-class>Servlets.CreateCocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CreateCocktailServlet</servlet-name>
+        <url-pattern>/createCocktail</url-pattern>
+    </servlet-mapping>
     
     <servlet>
         <servlet-name>FavCocktServlet</servlet-name>
@@ -270,4 +284,6 @@
         <servlet-name>BarmenListServlet</servlet-name>
         <url-pattern>/barmen</url-pattern>
     </servlet-mapping>
+    
+
 </web-app>

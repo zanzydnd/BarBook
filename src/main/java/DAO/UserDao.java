@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    public User getUserById(Integer id){
+    public User getUserById(Integer id) throws SQLException {
         Connection con = DBConnector.createConnection();
         String query = "select * from user where id=?";
         User res = new User();
         CocktailDao dao = new CocktailDao();
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet1 = null;
         try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,id);
-            ResultSet resultSet = ps.executeQuery();
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 res.setId(id);
                 res.setInformation(resultSet.getString("information"));
@@ -25,56 +30,76 @@ public class UserDao {
                 res.setEmail(resultSet.getString("email"));
                 res.setLogin(resultSet.getString("login"));
                 res.setImg(resultSet.getString("img"));
+                res.setCreatedCocktails(this.getCocktailsCreatedByUser(id));
             }
-            Connection connection = DBConnector.createConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from user_favourite_cocktail where user_id = ?");
-            statement.setInt(1,id);
-            ResultSet resultSet1 = statement.executeQuery();
+            connection = DBConnector.createConnection();
+            statement = connection.prepareStatement("select * from user_favourite_cocktail where user_id = ?");
+            statement.setInt(1, id);
+            resultSet1 = statement.executeQuery();
             List<Cocktail> list = new ArrayList<>();
-            while(resultSet1.next()){
+            while (resultSet1.next()) {
                 Cocktail cocktail = dao.getCocktailById(resultSet1.getInt("cocktail_id"));
                 list.add(cocktail);
             }
             res.setFavCocktails(list);
+            resultSet.close();
+            resultSet1.close();
+            statement.close();
+            ps.close();
             con.close();
             connection.close();
         } catch (SQLException e) {
+            if (resultSet != null)
+                resultSet.close();
+            if (resultSet1 != null)
+                resultSet1.close();
+            if (statement != null)
+                statement.close();
+            if (ps != null)
+                ps.close();
+            if (con != null)
+                con.close();
+            if (connection != null)
+                connection.close();
             e.printStackTrace();
         }
         return res;
     }
 
-    public void updateDB(String info , String name, String pathFile , Integer id){
-        System.out.println("ya v update");
+    public void updateDB(String info, String name, String pathFile, Integer id) throws SQLException {
         Connection con = DBConnector.createConnection();
+        PreparedStatement ps = null;
         try {
             if (!pathFile.equals("")) {
-                System.out.println("ya v ife");
                 String query = "update user set information = ? , name = ? ,img = ? where id=" + id;
-                PreparedStatement ps = con.prepareStatement(query);
-                ps.setString(1,info);
-                ps.setString(2,name);
-                ps.setString(3,pathFile);
+                ps = con.prepareStatement(query);
+                ps.setString(1, info);
+                ps.setString(2, name);
+                ps.setString(3, pathFile);
                 ps.executeUpdate();
                 con.close();
             } else {
                 String query = "update user set  information = ? , name = ? where id=" + id;
-                PreparedStatement ps = con.prepareStatement(query);
-                ps.setString(1,info);
-                ps.setString(2,name);
+                ps = con.prepareStatement(query);
+                ps.setString(1, info);
+                ps.setString(2, name);
                 ps.executeUpdate();
+                ps.close();
                 con.close();
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
+            if (con != null)
+                con.close();
+            if (ps != null)
+                ps.close();
             e.printStackTrace();
         }
     }
 
-    public List<User> getAllUsers(){
-        Connection con;
-        Statement statement;
-        ResultSet resultSet;
+    public List<User> getAllUsers() throws SQLException {
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         Integer idDB;
         List<User> list = new ArrayList<>();
         try {
@@ -86,11 +111,44 @@ public class UserDao {
                 user = this.getUserById(resultSet.getInt("id"));
                 list.add(user);
             }
+            resultSet.close();
+            statement.close();
             con.close();
             return list;
         } catch (SQLException e) {
+            if (resultSet != null)
+                resultSet.close();
+            if (statement != null)
+                statement.close();
+            if (con != null)
+                con.close();
             e.printStackTrace();
             return list;
         }
+    }
+
+    public List<Cocktail> getCocktailsCreatedByUser(Integer id) throws SQLException {
+        Connection con = DBConnector.createConnection();
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Cocktail> list = new ArrayList<>();
+        try{
+            ps = con.prepareStatement("select id from cocktail where author_id=?");
+            ps.setInt(1,id);
+            resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                list.add(new CocktailDao().getCocktailById(resultSet.getInt("id")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            assert resultSet != null;
+            resultSet.close();
+            assert ps != null;
+            ps.close();
+            con.close();
+        }
+        return list;
     }
 }

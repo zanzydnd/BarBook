@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
           rel="stylesheet">
     <title>Cocktail Info</title>
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
 </head>
 
 <body>
@@ -33,10 +33,12 @@
         </div>
     </div>
 </div>
-<@Cockt_list.Cockt_list cocktail_list = user_profile.favCocktails>
+<@Cockt_list.Cockt_list cocktail_list = user_profile.favCocktails string="Любимые Коктейли пользователя">
     <#if check=="self">
         <a href="/BarBookOriginal_war/change_profile">Редактировать профиль</a>
     </#if>
 </@Cockt_list.Cockt_list>
+
+<@Cockt_list.Cockt_list cocktail_list = user_profile.createdCocktails string="Коктейли созданные пользователем"/>
 </body>
 </html>

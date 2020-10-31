@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Sans:wght@400;500&display=swap"
           rel="stylesheet">
     <title>Cocktail Info</title>
-    <style><#include "style.css"></style>
+    <link rel="stylesheet" href="views/style.css">
 </head>
 
 <body>
@@ -33,6 +33,6 @@
         </div>
     </div>
 </div>
-<@Cockt_list.Cockt_list cocktail_list = cocktails/>
+<@Cockt_list.Cockt_list cocktail_list = cocktails string="Коктейли с ингридиентом"/>
 </body>
 </html>
