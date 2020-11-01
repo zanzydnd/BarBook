@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+    <servlet>
+        <servlet-name>freemarker</servlet-name>
+        <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>NoCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>text/html; charset=UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>template_update_delay</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>number_format</param-name>
+            <param-value>0.##########</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>freemarker</servlet-name>
+        <url-pattern>*.ftl</url-pattern>
+        <url-pattern>*.ftlh</url-pattern>
+    </servlet-mapping>
+
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>FreeMarker MVC Views</web-resource-name>
+            <url-pattern>*.ftl</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+        </auth-constraint>
+    </security-constraint>
+
+
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>Servlets.HomeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <servlet-class>Servlets.RegistrationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>Servlets.AuthServlet</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>utilites.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/authpath</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>CocktailListServlet</servlet-name>
+        <servlet-class>Servlets.CocktailListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>Servlets.SearchServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/Servlets.SearchServlet</url-pattern>
+
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CocktailListServlet</servlet-name>
+        <url-pattern>/cocktlist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IngridientListServlet</servlet-name>
+        <servlet-class>Servlets.IngridientListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>IngridientListServlet</servlet-name>
+        <url-pattern>/ingridientlist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CocktailServlet</servlet-name>
+        <servlet-class>Servlets.CocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>CocktailServlet</servlet-name>
+        <url-pattern>/cocktail</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CommnentServlet</servlet-name>
+        <servlet-class>Servlets.CommentServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CommnentServlet</servlet-name>
+        <url-pattern>/CommentServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>Servlets.LogoutServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>Servlets.ProfileServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ChangeProfileServlet</servlet-name>
+        <servlet-class>Servlets.ChangeProfileServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ChangeProfileServlet</servlet-name>
+        <url-pattern>/change_profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateCocktailServlet</servlet-name>
+        <servlet-class>Servlets.CreateCocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CreateCocktailServlet</servlet-name>
+        <url-pattern>/createCocktail</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>RedactCocktailServlet</servlet-name>
+        <servlet-class>Servlets.RedactCocktailServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RedactCocktailServlet</servlet-name>
+        <url-pattern>/redactCocktail</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>FavCocktServlet</servlet-name>
+        <servlet-class>Servlets.FavCocktServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>FavCocktServlet</servlet-name>
+        <url-pattern>/favcockt</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IngridientServlet</servlet-name>
+        <servlet-class>Servlets.IngridientServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>IngridientServlet</servlet-name>
+        <url-pattern>/ingridient</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ContestListServlet</servlet-name>
+        <servlet-class>Servlets.ContestListServlet</servlet-class>
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>C:\Users\Даня\IdeaProjects\BarBook\BarBook\src\main\webapp\views\img\</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ContestListServlet</servlet-name>
+        <url-pattern>/contestlist</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>Servlets.ImageServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/img</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>BarmenListServlet</servlet-name>
+        <servlet-class>Servlets.BarmenListServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>BarmenListServlet</servlet-name>
+        <url-pattern>/barmen</url-pattern>
+    </servlet-mapping>
+    
+
+</web-app>
