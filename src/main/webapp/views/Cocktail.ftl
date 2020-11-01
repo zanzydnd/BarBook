@@ -138,6 +138,7 @@
                                                 <#else>
                                                     <a href="/BarBookOriginal_war/profile?id=${comment.user.id}">${comment.user.name}</a>
                                                 </#if>
+                                                <p>${comment.date}</p>
                                             </div>
                                         </div>
                                         <div class="comments__text">

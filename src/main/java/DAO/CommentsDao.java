@@ -3,6 +3,7 @@ package DAO;
 import Entities.Cocktail;
 import Entities.Comment;
 import Entities.User;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.*;
@@ -14,7 +15,7 @@ public class CommentsDao {
         Connection connector = DBConnector.createConnection();
         PreparedStatement preparedStatement = null;
         try {
-            String query = "insert into commentofcocktail(Author_id,Comm,cockt_id) values(?,?,?)";
+            String query = "insert into commentofcocktail(Author_id,Comm,cockt_id,date) values(?,?,?,?)";
             preparedStatement = connector.prepareStatement(query);
             System.out.println(comment.getUser().getId());
             System.out.println(comment.getCocktail().getId());
@@ -22,17 +23,18 @@ public class CommentsDao {
             preparedStatement.setInt(1, comment.getUser().getId());
             preparedStatement.setString(2, comment.getComm());
             preparedStatement.setInt(3, comment.getCocktail().getId());
+            preparedStatement.setDate(4,comment.getDate());
             int i = preparedStatement.executeUpdate();
-            preparedStatement.close();
-            connector.close();
+            DbUtils.closeQuietly(preparedStatement);
+            DbUtils.closeQuietly(connector);
             if (i != 0) {
                 return "SUCCESS";
             }
         } catch (SQLException e) {
             if (preparedStatement != null)
-                preparedStatement.close();
+                DbUtils.closeQuietly(preparedStatement);
             if (connector != null)
-                connector.close();
+                DbUtils.closeQuietly(connector);
             e.printStackTrace();
         }
         return "Oops.. Something went wrong there..!";
@@ -41,12 +43,13 @@ public class CommentsDao {
     public List<Comment> getComments(Cocktail cocktail) throws SQLException {
         List<Comment> list = new ArrayList<>();
         Connection connector = DBConnector.createConnection();
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
-            String query = "select * from commentofcocktail where cockt_id=" + cocktail.getId();
-            statement = connector.createStatement();
-            resultSet = statement.executeQuery(query);
+            String query = "select * from commentofcocktail where cockt_id = ? order by date DESC";
+            statement = connector.prepareStatement(query);
+            statement.setInt(1,cocktail.getId());
+            resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Comment comment = new Comment();
                 User user;
@@ -56,19 +59,20 @@ public class CommentsDao {
                 comment.setUser(user);
                 comment.setComm(resultSet.getString("Comm"));
                 comment.setId(resultSet.getInt("id"));
+                comment.setDate(resultSet.getDate("date"));
                 list.add(comment);
             }
-            resultSet.close();
-            statement.close();
-            connector.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(connector);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (connector != null)
-                connector.close();
+                DbUtils.closeQuietly(connector);
             e.printStackTrace();
         }
         return list;

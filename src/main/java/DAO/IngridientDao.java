@@ -2,6 +2,7 @@ package DAO;
 
 import Entities.Cocktail;
 import Entities.Ingridient;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.*;
@@ -39,15 +40,15 @@ public class IngridientDao {
                     list.add(cocktail);
                 }
             }
-            resultSet.close();
-            ps.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
@@ -76,17 +77,17 @@ public class IngridientDao {
                 ingridient.setContent_type(resultSet.getString("content_type"));
                 list.add(ingridient);
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
@@ -107,9 +108,9 @@ public class IngridientDao {
                 res.setSmallImg(resultSet.getString("smallImg"));
                 res.setContent_type(resultSet.getString("content_type"));
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -144,17 +145,17 @@ public class IngridientDao {
                     list.add(c);
                 }
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;

@@ -51,6 +51,7 @@ package utilites;
     </security-constraint>*/
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DBConnector {
     public static Connection createConnection(){
@@ -59,16 +60,10 @@ public class DBConnector {
         String username = "root";
         String password = "root";
         try{
-            try{
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            }
-            catch (ClassNotFoundException e){
-                e.printStackTrace();
-            }
-            con = DriverManager.getConnection(url,username,password);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
+            DataSourcePick dt = new DataSourcePick(url,username,password);
+            con = dt.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return con;
     }

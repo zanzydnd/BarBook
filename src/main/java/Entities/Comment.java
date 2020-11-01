@@ -1,13 +1,22 @@
 package Entities;
 
+import java.sql.Date;
+
 public class Comment {
 
     private Cocktail cocktail;
     private User user;
     private Integer id;
     private String comm;
+    private Date date;
 
-    public Comment() {
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void setCocktail(Cocktail cocktail) {

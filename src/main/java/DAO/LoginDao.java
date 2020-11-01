@@ -1,6 +1,7 @@
 package DAO;
 
 import Entities.User;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.Connection;
@@ -38,22 +39,22 @@ public class LoginDao {
                     res.setEmail(resultSet.getString("email"));
                     res.setLogin(resultSet.getString("login"));
                     res.setImg(resultSet.getString("img"));
-                    resultSet.close();
-                    statement.close();
-                    con.close();
+                    DbUtils.closeQuietly(resultSet);
+                    DbUtils.closeQuietly(statement);
+                    DbUtils.closeQuietly(con);
                     return res; ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                 }
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return null;

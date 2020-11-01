@@ -2,6 +2,7 @@ package DAO;
 
 import Entities.Cocktail;
 import Entities.User;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.*;
@@ -42,25 +43,25 @@ public class UserDao {
                 list.add(cocktail);
             }
             res.setFavCocktails(list);
-            resultSet.close();
-            resultSet1.close();
-            statement.close();
-            ps.close();
-            con.close();
-            connection.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(resultSet1);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(con);
+            DbUtils.closeQuietly(connection);
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (resultSet1 != null)
-                resultSet1.close();
+                DbUtils.closeQuietly(resultSet1);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (ps != null)
-                ps.close();
+                DbUtils.closeQuietly(ps);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             if (connection != null)
-                connection.close();
+                DbUtils.closeQuietly(connection);
             e.printStackTrace();
         }
         return res;
@@ -77,21 +78,23 @@ public class UserDao {
                 ps.setString(2, name);
                 ps.setString(3, pathFile);
                 ps.executeUpdate();
-                con.close();
+                DbUtils.closeQuietly(ps);
+                DbUtils.closeQuietly(con);
             } else {
                 String query = "update user set  information = ? , name = ? where id=" + id;
                 ps = con.prepareStatement(query);
                 ps.setString(1, info);
                 ps.setString(2, name);
                 ps.executeUpdate();
-                ps.close();
-                con.close();
+                DbUtils.closeQuietly(ps);
+                DbUtils.closeQuietly(con);
             }
         } catch (SQLException e) {
-            if (con != null)
-                con.close();
             if (ps != null)
-                ps.close();
+                DbUtils.closeQuietly(ps);
+            if (con != null) {
+                DbUtils.closeQuietly(con);
+            }
             e.printStackTrace();
         }
     }
@@ -111,17 +114,17 @@ public class UserDao {
                 user = this.getUserById(resultSet.getInt("id"));
                 list.add(user);
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
             return list;
         }
@@ -144,10 +147,10 @@ public class UserDao {
         }
         finally {
             assert resultSet != null;
-            resultSet.close();
+            DbUtils.closeQuietly(resultSet);
             assert ps != null;
-            ps.close();
-            con.close();
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(con);
         }
         return list;
     }

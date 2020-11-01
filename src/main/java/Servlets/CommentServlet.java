@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class CommentServlet extends HttpServlet {
     @Override
@@ -42,6 +45,9 @@ public class CommentServlet extends HttpServlet {
                 comment.setComm(req.getParameter("comment"));
                 comment.setUser(user);
                 comment.setCocktail(cocktail);
+                long millis=System.currentTimeMillis();
+                java.sql.Date date=new java.sql.Date(millis);
+                comment.setDate(date);
                 try {
                     dao.putComment(comment);
                 } catch (SQLException throwables) {

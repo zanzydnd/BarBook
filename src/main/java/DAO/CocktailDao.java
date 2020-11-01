@@ -2,6 +2,7 @@ package DAO;
 
 import Entities.Cocktail;
 import Entities.Ingridient;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.*;
@@ -38,17 +39,17 @@ public class CocktailDao {
                 cocktail.setIngridients(this.getRecepie(cocktail));
                 list.add(cocktail);
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
@@ -109,12 +110,12 @@ public class CocktailDao {
                     s1.retainAll(s2);
                     System.out.println(s1);
                 }
-                resultSetForTag.close();
-                resSetForCockt.close();
-                statement2.close();
-                statement.close();
-                con2.close();
-                con.close();
+                DbUtils.closeQuietly(resultSetForTag);
+                DbUtils.closeQuietly(resSetForCockt);
+                DbUtils.closeQuietly(statement2);
+                DbUtils.closeQuietly(statement);
+                DbUtils.closeQuietly(con2);
+                DbUtils.closeQuietly(con);
             }
             System.out.println("s1" + s1);
             System.out.println("asdadsas");
@@ -127,17 +128,17 @@ public class CocktailDao {
             return list;
         } catch (SQLException e) {
             if (resultSetForTag != null)
-                resultSetForTag.close();
+                DbUtils.closeQuietly(resultSetForTag);
             if (resSetForCockt != null)
-                resSetForCockt.close();
+                DbUtils.closeQuietly(resSetForCockt);
             if (statement2 != null)
-                statement2.close();
+                DbUtils.closeQuietly(statement2);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con2 != null)
-                con2.close();
+                DbUtils.closeQuietly(con2);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
         }
         return list;
     }
@@ -184,17 +185,17 @@ public class CocktailDao {
                     System.out.println(c.getId());
                 }
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
@@ -231,26 +232,26 @@ public class CocktailDao {
                     list.add(ingridient);
                 }
             }
-            resultSet.close();
-            finalSet.close();
-            statement2.close();
-            statement.close();
-            con.close();
-            con2.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(finalSet);
+            DbUtils.closeQuietly(statement2);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
+            DbUtils.closeQuietly(con2);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (finalSet != null)
-                finalSet.close();
+                DbUtils.closeQuietly(finalSet);
             if (statement2 != null)
-                statement2.close();
+                DbUtils.closeQuietly(statement2);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             if (con2 != null)
-                con2.close();
+                DbUtils.closeQuietly(con2);
             e.printStackTrace();
         }
         return list;
@@ -278,16 +279,16 @@ public class CocktailDao {
                 res.setAuthor_id(resultSet.getInt("author_id"));
             }
             res.setIngridients(this.getRecepie(res));
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return res;
@@ -325,44 +326,45 @@ public class CocktailDao {
                 ps.setInt(2, cockt_id);
                 cocktail.setRating(rate);
                 ps.executeUpdate();
-                ps.close();
-                statement2.close();
-                statement2.close();
-                con2.close();
-                con.close();
+                DbUtils.closeQuietly(ps);
+                DbUtils.closeQuietly(preparedStatement);
+                DbUtils.closeQuietly(statement2);
+                DbUtils.closeQuietly(con2);
+                DbUtils.closeQuietly(con1);
+                DbUtils.closeQuietly(con);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } finally {
                 if (ps != null)
-                    ps.close();
+                    DbUtils.closeQuietly(ps);
                 if (statement2 != null)
-                    statement2.close();
+                    DbUtils.closeQuietly(statement2);
                 if (con2 != null)
-                    con2.close();
+                    DbUtils.closeQuietly(con2);
                 if (con != null)
-                    con.close();
+                    DbUtils.closeQuietly(con);
                 if (resultSet != null)
-                    resultSet.close();
+                    DbUtils.closeQuietly(resultSet);
                 if (preparedStatement != null)
-                    preparedStatement.close();
+                    DbUtils.closeQuietly(preparedStatement);
                 if (con1 != null)
-                    con1.close();
+                    DbUtils.closeQuietly(con1);
             }
         } else {
             if (ps != null)
-                ps.close();
+                DbUtils.closeQuietly(ps);
             if (statement2 != null)
-                statement2.close();
+                DbUtils.closeQuietly(statement2);
             if (con2 != null)
-                con2.close();
+                DbUtils.closeQuietly(con2);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (preparedStatement != null)
-                preparedStatement.close();
+                DbUtils.closeQuietly(preparedStatement);
             if (con1 != null)
-                con1.close();
+                DbUtils.closeQuietly(con1);
             throw new SQLException();
         }
     }
@@ -389,33 +391,33 @@ public class CocktailDao {
                 ps.setInt(1, user_id);
                 ps.setInt(2, cockt_id);
                 ps.executeUpdate();
-                ps.close();
-                con.close();
+                DbUtils.closeQuietly(ps);
+                DbUtils.closeQuietly(con);
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
                 if (ps != null)
-                    ps.close();
+                    DbUtils.closeQuietly(ps);
                 if (resultSet != null)
-                    resultSet.close();
+                    DbUtils.closeQuietly(resultSet);
                 if (preparedStatement1 != null)
-                    preparedStatement1.close();
+                    DbUtils.closeQuietly(preparedStatement1);
                 if (con1 != null)
-                    con1.close();
+                    DbUtils.closeQuietly(con1);
                 if (con != null)
-                    con.close();
+                    DbUtils.closeQuietly(con);
             }
         } else {
             if (ps != null)
-                ps.close();
+                DbUtils.closeQuietly(ps);
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (preparedStatement1 != null)
-                preparedStatement1.close();
+                DbUtils.closeQuietly(preparedStatement1);
             if (con1 != null)
-                con1.close();
+                DbUtils.closeQuietly(con1);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             throw new SQLException();
         }
 
@@ -442,8 +444,8 @@ public class CocktailDao {
             throwables.printStackTrace();
         } finally {
             assert psCocktail != null;
-            psCocktail.close();
-            conToCocktail.close();
+            DbUtils.closeQuietly(psCocktail);
+            DbUtils.closeQuietly(conToCocktail);
         }
 
         Integer id = 0;
@@ -461,10 +463,10 @@ public class CocktailDao {
             e.printStackTrace();
         } finally {
             assert rs != null;
-            rs.close();
+            DbUtils.closeQuietly(rs);
             assert ps != null;
-            ps.close();
-            getIdCon.close();
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(getIdCon);
         }
 
         Connection setRecCon = DBConnector.createConnection();
@@ -474,12 +476,12 @@ public class CocktailDao {
                 setRecPs.setInt(1, id);
                 setRecPs.setInt(2, Integer.parseInt(ingList[i]));
                 setRecPs.executeUpdate();
-                setRecPs.close();
+                DbUtils.closeQuietly(setRecPs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            setRecCon.close();
+            DbUtils.closeQuietly(setRecCon);
         }
 
         Connection forTagsCon = DBConnector.createConnection();
@@ -496,13 +498,13 @@ public class CocktailDao {
                         tagsList.add(rsForTags.getInt("id"));
                     }
                 }
-                rsForTags.close();
-                preparedStatementForTags.close();
+                DbUtils.closeQuietly(rsForTags);
+                DbUtils.closeQuietly(preparedStatementForTags);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            forTagsCon.close();
+            DbUtils.closeQuietly(forTagsCon);
         }
 
         Connection ferInsTagCon = DBConnector.createConnection();
@@ -512,12 +514,12 @@ public class CocktailDao {
                 psInsTag.setInt(1, id);
                 psInsTag.setInt(2, tagid);
                 psInsTag.executeUpdate();
-                psInsTag.close();
+                DbUtils.closeQuietly(psInsTag);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ferInsTagCon.close();
+            DbUtils.closeQuietly(ferInsTagCon);
         }
         return id;
     }
@@ -561,8 +563,8 @@ public class CocktailDao {
         }catch (SQLException e){
             e.printStackTrace();
         } finally {
-            ps.close();
-            con.close();
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(con);
         }
     }
 }

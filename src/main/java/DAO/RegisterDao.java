@@ -1,6 +1,7 @@
 package DAO;
 
 import Entities.User;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 import utilites.Hashing;
 
@@ -41,16 +42,18 @@ public class RegisterDao {
             preparedStatement.setString(5,information);
 
             int i= preparedStatement.executeUpdate();
-            resultSet.close();
-            preparedStatement.close();
-            con.close();
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(con2);
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(preparedStatement);
+            DbUtils.closeQuietly(con);
             if (i!=0)  //Just to ensure data has been inserted into the database
                 return "SUCCESS";
         }
         catch(SQLException e)
         {
-            preparedStatement.close();
-            con.close();
+            DbUtils.closeQuietly(preparedStatement);
+            DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         System.out.println("Oops.. Something went wrong there..!");

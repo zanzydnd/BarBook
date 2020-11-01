@@ -2,6 +2,7 @@ package DAO;
 
 import Entities.Contest;
 import Entities.Ingridient;
+import org.apache.commons.dbutils.DbUtils;
 import utilites.DBConnector;
 
 import java.sql.Connection;
@@ -37,17 +38,17 @@ public class ContestDao {
                     list.add(contest);
                 }
             }
-            resultSet.close();
-            statement.close();
-            con.close();
+            DbUtils.closeQuietly(resultSet);
+            DbUtils.closeQuietly(statement);
+            DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
             if (resultSet != null)
-                resultSet.close();
+                DbUtils.closeQuietly(resultSet);
             if (statement != null)
-                statement.close();
+                DbUtils.closeQuietly(statement);
             if (con != null)
-                con.close();
+                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
