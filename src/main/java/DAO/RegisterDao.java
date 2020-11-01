@@ -15,48 +15,40 @@ public class RegisterDao {
         String password = Hashing.md5Custom(user.getPassword());
         String img = user.getImg();
         String information = user.getInformation();
+        String query = "insert into user(login,name,password,email," +
+                "information) values (?,?,?,?,?)";
+        try (
+                Connection con = DBConnector.createConnection();
+                Connection con2 = DBConnector.createConnection();
+                PreparedStatement ps = con2.prepareStatement("select login from user where login=?");
+                PreparedStatement preparedStatement = con.prepareStatement(query);
+        ) {
 
-        Connection con = null;
-        PreparedStatement preparedStatement = null;
-        try
-        {
-            con = DBConnector.createConnection();
-            Connection con2 = DBConnector.createConnection();
-            PreparedStatement ps = con2.prepareStatement("select login from user where login=?");
-            ps.setString(1,login);
+            ps.setString(1, login);
             ResultSet resultSet = ps.executeQuery();
-            //Statement statement = con2.createStatement();
-            //ResultSet resultSet = statement.executeQuery("select login from user where login='" + login + "'");
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 String s = resultSet.getString("login");
                 if (s.equals(login))
                     throw new SQLException();
             }
-            String query = "insert into user(login,name,password,email," +
-                    "information) values (?,?,?,?,?)"; //Insert user details into the table 'USERS'
-            preparedStatement = con.prepareStatement(query); //Making use of prepared statements here to insert bunch of data
+
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, email);
-            preparedStatement.setString(5,information);
+            preparedStatement.setString(5, information);
 
-            int i= preparedStatement.executeUpdate();
+            int i = preparedStatement.executeUpdate();
             DbUtils.closeQuietly(ps);
             DbUtils.closeQuietly(con2);
             DbUtils.closeQuietly(resultSet);
             DbUtils.closeQuietly(preparedStatement);
             DbUtils.closeQuietly(con);
-            if (i!=0)  //Just to ensure data has been inserted into the database
+            if (i != 0)
                 return "SUCCESS";
-        }
-        catch(SQLException e)
-        {
-            DbUtils.closeQuietly(preparedStatement);
-            DbUtils.closeQuietly(con);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Oops.. Something went wrong there..!");
-        return "Oops.. Something went wrong there..!";  // On failure, send a message from here.
+        return "Oops.. Something went wrong there..!";
     }
 }

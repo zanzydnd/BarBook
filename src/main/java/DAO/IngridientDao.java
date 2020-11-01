@@ -14,12 +14,11 @@ import java.util.regex.Pattern;
 public class IngridientDao {
     public List<Cocktail> getCoctailsByIngridient(Ingridient ingridient) throws SQLException {
         int idIng = ingridient.getId();
-        Connection con = null;
         ResultSet resultSet = null;
         List<Cocktail> list = new ArrayList<>();
-        try {
-            con = DBConnector.createConnection();
+        try(Connection con = DBConnector.createConnection();
             PreparedStatement ps = con.prepareStatement("select cocktid,ingid from recipie where ingid=?");
+        ) {
             ps.setInt(1, idIng);
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -47,22 +46,17 @@ public class IngridientDao {
         } catch (SQLException e) {
             if (resultSet != null)
                 DbUtils.closeQuietly(resultSet);
-            if (con != null)
-                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
     }
 
     public static List<Ingridient> getAllIngridients() throws SQLException {
-        Connection con = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         List<Ingridient> list = new ArrayList<>();
-        try {
-            con = DBConnector.createConnection();
-            statement = con.createStatement();
-            resultSet = statement.executeQuery("select * from ingridient");
+        try(Connection con =DBConnector.createConnection();
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from ingridient");
+        ) {
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 Integer id = resultSet.getInt("id");
@@ -82,12 +76,6 @@ public class IngridientDao {
             DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
-            if (resultSet != null)
-                DbUtils.closeQuietly(resultSet);
-            if (statement != null)
-                DbUtils.closeQuietly(statement);
-            if (con != null)
-                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;
@@ -95,9 +83,8 @@ public class IngridientDao {
 
     public static Ingridient getIngredientById(Integer id) {
         Ingridient res = new Ingridient();
-        try {
-            Connection con = DBConnector.createConnection();
-            PreparedStatement statement = con.prepareStatement("select * from ingridient where id=?");
+        try(Connection con = DBConnector.createConnection();
+            PreparedStatement statement = con.prepareStatement("select * from ingridient where id=?");) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -118,14 +105,11 @@ public class IngridientDao {
     }
 
     public List<Ingridient> findIngridients(String search) throws SQLException {
-        Connection con = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
         List<Ingridient> list = new ArrayList<>();
-        try {
-            con = DBConnector.createConnection();
-            statement = con.createStatement();
-            resultSet = statement.executeQuery("select * from ingridient");
+        try(Connection con = DBConnector.createConnection();
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from ingridient");
+        ) {
             List<Ingridient> ings = new ArrayList<>();
             while (resultSet.next()) {
                 Ingridient ingridient = new Ingridient();
@@ -150,12 +134,6 @@ public class IngridientDao {
             DbUtils.closeQuietly(con);
             return list;
         } catch (SQLException e) {
-            if (resultSet != null)
-                DbUtils.closeQuietly(resultSet);
-            if (statement != null)
-                DbUtils.closeQuietly(statement);
-            if (con != null)
-                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;

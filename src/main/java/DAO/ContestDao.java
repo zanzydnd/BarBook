@@ -15,13 +15,11 @@ import java.util.List;
 
 public class ContestDao {
     public static List<Contest> getAllContest() throws SQLException {
-        Connection con = null;
-        Statement statement = null;
         ResultSet resultSet = null;
         List<Contest> list = new ArrayList<>();
-        try {
-            con = DBConnector.createConnection();
-            statement = con.createStatement();
+        try (Connection con = DBConnector.createConnection();
+            Statement statement = con.createStatement();
+        ){
             resultSet = statement.executeQuery("select * from contests");
             while (resultSet.next()) {
                 Contest contest = new Contest();
@@ -45,10 +43,6 @@ public class ContestDao {
         } catch (SQLException e) {
             if (resultSet != null)
                 DbUtils.closeQuietly(resultSet);
-            if (statement != null)
-                DbUtils.closeQuietly(statement);
-            if (con != null)
-                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return list;

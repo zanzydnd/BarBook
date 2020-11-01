@@ -14,21 +14,14 @@ public class LoginDao {
         String userName = user.getLogin();
         String password = user.getPassword();
 
-        Connection con = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
         String userNameDB = "";
         String passwordDB = "";
 
-        try {
-            con = DBConnector.createConnection(); //Fetch database connection object
-            statement = con.createStatement(); //Statement is used to write queries. Read more about it.
-            resultSet = statement.executeQuery("select * from user"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
-
-            while (resultSet.next()) // Until next row is present otherwise it return false
-            {
-                userNameDB = resultSet.getString("login"); //fetch the values present in database
+        try (Connection con = DBConnector.createConnection();
+             Statement statement = con.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from user");) {
+            while (resultSet.next()) {
+                userNameDB = resultSet.getString("login");
                 passwordDB = resultSet.getString("password");
                 User res = new User();
                 if (userName.equals(userNameDB) && password.equals(passwordDB)) {
@@ -42,19 +35,13 @@ public class LoginDao {
                     DbUtils.closeQuietly(resultSet);
                     DbUtils.closeQuietly(statement);
                     DbUtils.closeQuietly(con);
-                    return res; ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
+                    return res;
                 }
             }
             DbUtils.closeQuietly(resultSet);
             DbUtils.closeQuietly(statement);
             DbUtils.closeQuietly(con);
         } catch (SQLException e) {
-            if (resultSet != null)
-                DbUtils.closeQuietly(resultSet);
-            if (statement != null)
-                DbUtils.closeQuietly(statement);
-            if (con != null)
-                DbUtils.closeQuietly(con);
             e.printStackTrace();
         }
         return null;
